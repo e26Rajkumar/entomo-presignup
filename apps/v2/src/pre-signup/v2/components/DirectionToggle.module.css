@@ -1,0 +1,55 @@
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.option {
+  min-width: 40px;
+  padding: 7px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.option:hover {
+  color: #000;
+}
+
+.option[aria-pressed="true"] {
+  background: var(--color-heading, #3464b0);
+  color: #fff;
+}
+
+.option:focus-visible {
+  outline: 2px solid var(--color-heading, #3464b0);
+  outline-offset: 2px;
+}
+
+/* For dark bars. */
+.dark {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.dark .option {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.dark .option:hover {
+  color: #fff;
+}
+
+.dark .option:focus-visible {
+  outline-color: #fff;
+}

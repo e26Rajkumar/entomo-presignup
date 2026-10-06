@@ -1,0 +1,76 @@
+@import "./styles/entomo-ui.css";
+@source "./**/*.{tsx,ts,js,jsx}";
+
+@theme {
+  --container-intro: 620px;
+
+  /* Web-only: filled buttons use the lighter interactive yellow (defined in
+     @entomo/ui) rather than --color-primary. admin/superadmin keep their own. */
+  --color-primary-button: var(--color-interactive-yellow);
+}
+
+/* Anything inside an actual <button>/<a> that's on the tenant-branded primary
+   surface (.bg-primary / .bg-primary-button, incl. the shared <Button>
+   component's default variant, which compiles to the latter) must render in
+   the contrast-derived --color-primary-button-foreground, never a hardcoded
+   token. Call sites across the app have independently reached for half a
+   dozen different "near-black" or "near-white" tokens here (text-static-text,
+   text-body-black, text-on-dark, text-on-dark-bg, text-text-body-dark, raw
+   inline SVG fill/stroke) — all blind to what BrandingThemeStyle actually put
+   on --color-primary-button for this tenant. Rather than chase each token by
+   name (proven, repeatedly, to miss new ones), this asserts the invariant
+   directly for interactive elements: the button/link itself, a nested
+   decorative span/div carrying the background class (e.g. a pill label
+   inside a real button), and every descendant of either (text, icons via
+   `currentColor`/`fill-current`) inherit the one derived colour.
+   `.bg-primary`/`.bg-primary-button` are also reused as a plain accent
+   colour on non-interactive decorative badges (career-path-section's
+   timeline marker, coming-soon's sparkle/pill, summary-metrics' stat icon)
+   that were never meant to be touched — the `:is(button, a)` qualifier keeps
+   this scoped to genuine controls and excludes those.
+   --color-primary-button-foreground (not --color-on-text-primary) is
+   deliberate: the latter is a generic theme-flip token with unrelated
+   pre-existing consumers (employer-information.tsx's headings on plain
+   bg-card, icons in non-primary buttons/links elsewhere) that must NOT
+   repaint when the tenant's button colour changes — see BrandingThemeStyle.tsx.
+   Also matches the escaped `!`-important background variants (`bg-primary\!`,
+   `bg-primary-button\!`) for parity with the older, narrower rule this
+   replaces — unused today, but a future `!`-forced background shouldn't
+   silently lose this coverage. `!important` + `@layer utilities` because
+   `text-static-text!` (and other `!`-suffixed utilities) already compile to
+   `!important` rules in that same layer — a plain override loses to them.
+   Web-only (this file isn't loaded by admin/superadmin) — those apps keep
+   the shared component's hardcoded pairing untouched. */
+@layer utilities {
+  :is(button, a):is(
+      .bg-primary,
+      .bg-primary-button,
+      .bg-primary\!,
+      .bg-primary-button\!
+    ),
+  :is(button, a):is(
+      .bg-primary,
+      .bg-primary-button,
+      .bg-primary\!,
+      .bg-primary-button\!
+    )
+    *,
+  :is(button, a)
+    :is(.bg-primary, .bg-primary-button, .bg-primary\!, .bg-primary-button\!),
+  :is(button, a)
+    :is(.bg-primary, .bg-primary-button, .bg-primary\!, .bg-primary-button\!)
+    * {
+    color: var(--color-primary-button-foreground) !important;
+  }
+}
+
+/* Placeholder typography for the master-profile modals' description editors
+   (the RichTextEditor tagged with `editorClassName="mp-description"`). Scoped
+   here so other editors (announcements, resume) keep their own placeholder. */
+.mp-description p.is-editor-empty:first-child::before {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  letter-spacing: 0;
+}

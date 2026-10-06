@@ -1,0 +1,16 @@
+{
+  "name": "entomo-presignup",
+  "private": true,
+  "workspaces": ["apps/*"],
+  "scripts": {
+    "dev": "concurrently -k -n v1,v2,v3 -c blue,magenta,yellow \"bun run --cwd apps/v1 dev\" \"bun run --cwd apps/v2 dev\" \"bun run --cwd apps/v3 dev\"",
+    "dev:v1": "bun run --cwd apps/v1 dev",
+    "dev:v2": "bun run --cwd apps/v2 dev",
+    "dev:v3": "bun run --cwd apps/v3 dev",
+    "build": "bun run --cwd apps/v1 build && bun run --cwd apps/v2 build && bun run --cwd apps/v3 build",
+    "type-check": "bun run --cwd apps/v1 type-check && bun run --cwd apps/v2 type-check && bun run --cwd apps/v3 type-check"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

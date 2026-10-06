@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en-PH">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ministry of Labour Digital Workforce Hub | Pre-signup v3</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- Apply the saved LTR/RTL choice before first paint (see src/hooks/use-text-direction.ts). -->
+    <script>
+      try {
+        if (localStorage.getItem("presignup-dir") === "rtl") document.documentElement.dir = "rtl";
+      } catch (e) {}
+    </script>
+  </head>
+  <body data-theme="light">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

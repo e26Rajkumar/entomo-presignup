@@ -1,0 +1,286 @@
+.header-2026 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2000;
+  padding: 24px 24px 0;
+  transition: padding 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  /* Solid white pill with dark text, regardless of OS colour scheme. */
+  --header-bg: #ffffff;
+  --header-border: rgba(0, 0, 0, 0.08);
+  --header-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  --text-main: #111;
+  --text-hover: #000;
+  font-family: "SF Pro Display", "Inter", -apple-system, BlinkMacSystemFont,
+    sans-serif;
+}
+
+.dynamic-island {
+  pointer-events: auto;
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  z-index: 9999;
+  /* Anchored at center, pushed to the right gutter via transform so it can
+     glide back to the middle on scroll (transform is GPU-accelerated). */
+  transform: translateX(calc(50vw - 32px - 100%));
+  flex-shrink: 0;
+  background: var(--header-bg);
+  border: 1px solid var(--header-border);
+  border-radius: 100px;
+  padding: 6px;
+  padding-inline-start: 16px;
+  box-shadow: var(--header-shadow);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), padding 0.7s
+    cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  min-height: 44px;
+  padding: 0;
+}
+
+/* Smoothly fade + slide the logo out once the page is scrolled. */
+.scrolled .single-logo {
+  opacity: 0;
+  transform: translateY(-16px);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Single brand logo (Ministry of Labour) in the header — background image,
+   182x56.56 at the SVG's natural aspect ratio (393.98 x 122.54). White-text
+   version: it is only visible at the top of the page, over the hero photos.
+   Fixed-positioned directly (no anchor wrapper). */
+.single-logo {
+  position: fixed;
+  top: 10px;
+  left: 32px;
+  z-index: 2001;
+  pointer-events: auto;
+  display: block;
+  background-image: url(/assets/images/ministry-of-labour-logo-light.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: left center;
+  width: 182px;
+  height: 56.56px;
+  flex-shrink: 0;
+  transition: opacity 0.4s, transform 0.4s, visibility 0.4s, height 0.4s, width
+    0.4s;
+}
+
+.desktop-nav {
+  flex: 1;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.nav-link {
+  position: relative;
+  text-decoration: none;
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: -0.01em;
+  padding: 8px 14px;
+  border-radius: 99px;
+  opacity: 0.75;
+  white-space: nowrap;
+  transition: opacity 0.25s ease;
+}
+.nav-link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 99px;
+  background: rgba(0, 0, 0, 0.06);
+  transform: scale(0.85);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  z-index: 0;
+}
+.nav-link .link-text {
+  position: relative;
+  z-index: 1;
+}
+.nav-link:hover {
+  opacity: 1;
+}
+.nav-link:hover::before {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.scrolled {
+  padding: 12px 24px 0;
+}
+.scrolled .dynamic-island {
+  /* Glide to horizontal center once scrolled. */
+  transform: translateX(-50%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+/* Below the `lg` breakpoint the island holds only the hamburger toggle (the
+   desktop nav is hidden), so centering it on scroll just shoves the button to
+   the middle. Keep it anchored in the right gutter instead — matching its
+   resting position — while still picking up the scrolled shadow above. */
+@media (max-width: 1023.98px) {
+  .scrolled .dynamic-island {
+    transform: translateX(calc(50vw - 32px - 100%));
+  }
+}
+/* RTL: mirror the resting layout — logo in the right gutter, island in the
+   left gutter. The scrolled, centred island needs no change. */
+:global([dir="rtl"]) .single-logo {
+  left: auto;
+  right: 32px;
+  background-position: right center;
+}
+:global([dir="rtl"]) .dynamic-island {
+  transform: translateX(calc(32px - 50vw));
+}
+:global([dir="rtl"]) .scrolled .dynamic-island {
+  transform: translateX(-50%);
+}
+@media (max-width: 1023.98px) {
+  :global([dir="rtl"]) .scrolled .dynamic-island {
+    transform: translateX(calc(32px - 50vw));
+  }
+}
+.scrolled .desktop-nav {
+  gap: 0.25rem;
+}
+.scrolled .desktop-nav .nav-link {
+  font-size: 0.75rem;
+  padding: 6px 12px;
+}
+
+.right-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.login-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-inline-start: 0.5rem;
+}
+
+.btn-glow {
+  background: #111;
+  color: #fff;
+  border-radius: 99px;
+  padding: 10px 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-size: 0.875rem;
+  border: none;
+  white-space: nowrap;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+.btn-glow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  background: #000;
+}
+
+.mobile-toggle {
+  background: transparent;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.hamburger {
+  width: 24px;
+  height: 18px;
+  position: relative;
+}
+
+.line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: var(--text-main);
+  border-radius: 2px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  left: 0;
+}
+
+.line-1 {
+  top: 0;
+}
+
+.line-2 {
+  bottom: 0;
+  width: 60%;
+  right: 0;
+  left: auto;
+}
+
+.menu-open .line-1 {
+  transform: translateY(8px) rotate(45deg);
+  width: 100%;
+}
+.menu-open .line-2 {
+  transform: translateY(-8px) rotate(-45deg);
+  width: 100%;
+}
+
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  z-index: -1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.mobile-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.mobile-overlay.active .mobile-link,
+.mobile-overlay.active .mobile-actions {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: calc(var(--i) * 0.05s);
+}
+
+.mobile-menu-inner {
+  padding: 0 40px;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mobile-actions {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}

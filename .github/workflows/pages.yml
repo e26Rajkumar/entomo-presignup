@@ -1,0 +1,73 @@
+# Builds pre-signup v1, v2 and v3 and publishes them to GitHub Pages as one
+# site: <pages-url>/v1/, /v2/, /v3/, with a small landing page at the root.
+#
+# One-time setup in the GitHub repository:
+#   1. Settings → Pages → Build and deployment → Source: "GitHub Actions".
+#   2. Settings → Secrets and variables → Actions → Variables:
+#        VITE_API_BASE_URL  backend origin, e.g. https://api.example.com
+#                           (it must allow this site's origin via CORS)
+#        VITE_DEV_TENANT    tenant subdomain the pages should show
+#        VITE_WEB_APP_URL   web app the Login buttons send people to
+#      These end up in the public JavaScript, so they are variables, not secrets.
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time; let an in-flight one finish rather than cancel it.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: pages
+        uses: actions/configure-pages@v5
+
+      - uses: oven-sh/setup-bun@v2
+
+      - run: bun install --frozen-lockfile
+
+      - run: bun run type-check
+
+      - name: Build v1, v2 and v3 into one site
+        env:
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+          VITE_DEV_TENANT: ${{ vars.VITE_DEV_TENANT }}
+          VITE_WEB_APP_URL: ${{ vars.VITE_WEB_APP_URL }}
+          # "/<repo>" for a project site; "" for a custom domain or a
+          # <user>.github.io repository.
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+        run: |
+          mkdir -p site
+          for app in v1 v2 v3; do
+            bun run --cwd "apps/$app" build --base="$BASE_PATH/$app/"
+            cp -r "apps/$app/dist" "site/$app"
+          done
+          cp .github/pages/index.html site/index.html
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

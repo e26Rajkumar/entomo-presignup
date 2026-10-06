@@ -1,0 +1,261 @@
+/* ============================================================
+   Custom pre-signup v1 styles
+   (Extracted from main branch — not Bootstrap)
+   ============================================================ */
+
+:root {
+  --display-font: "Montserrat", sans-serif;
+  /* Fill for every call-to-action button on the page (not the header's Login). */
+  --color-cta: #f39d52;
+  /* Section headings on the page background (card titles keep their own). */
+  --color-heading: #3464b0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ============================================================
+   Theme variables — driven by data-theme attribute on <body>
+   ============================================================ */
+
+body[data-theme="white"] {
+  --color-bg: #ffffff !important;
+  --color-text: #000000;
+}
+
+body[data-theme="blue"] {
+  --color-bg: #203e64;
+  --color-text: #ffffff;
+}
+
+body[data-theme="red"] {
+  --color-bg: #e45b40;
+  --color-text: #ffffff;
+}
+
+body[data-theme="pink"] {
+  --color-bg: #db3c8a;
+  --color-text: #ffffff;
+}
+
+body[data-theme="yellow"] {
+  --color-bg: #f9e26b;
+  --color-text: #000000;
+}
+
+body[data-theme="babyPink"] {
+  --color-bg: #fce5df;
+  --color-text: #000000;
+}
+
+body[data-theme="toolkitGray"] {
+  --color-bg: var(--color-toolkit-section-bg);
+  --color-text: #000000;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  --bg-1: color-mix(in srgb, var(--color-bg), #ffffff 12%);
+  --bg-color: color-mix(in srgb, var(--color-bg), #000000 80%);
+  --bg-3: color-mix(in srgb, var(--color-bg), #ffffff 60%);
+  --bg-4: color-mix(in srgb, var(--color-bg), #ffffff 90%);
+}
+
+.pre-signup-v1 {
+  overflow-x: clip;
+}
+
+/* Animate theme transitions */
+#root,
+body,
+.bg-1,
+.bg-2,
+.bg-3,
+.btn-website,
+.pill {
+  transition: background-color .6s ease-in-out, color .6s ease-in-out;
+}
+
+/* ============================================================
+   Typography scale
+   ============================================================ */
+
+.display-1,
+.display-2,
+.display-3,
+.display-4,
+.display-5,
+.display-6,
+.display-7 {
+  font-family: var(--display-font);
+  text-transform: uppercase;
+  line-height: 1;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.display-1 {
+  font-size: clamp(2.625rem, 2.0289rem + 2.6vw, 6.5rem);
+  font-weight: 900;
+  letter-spacing: -0.05rem;
+}
+
+.display-2 {
+  font-size: clamp(2.375rem, 1.8942rem + 2.404vw, 5.5rem);
+  font-weight: 800;
+}
+
+.display-3 {
+  font-size: clamp(2.125rem, 1.7596rem + 1.827vw, 4.5rem);
+  font-weight: 700;
+}
+
+.display-4 {
+  font-size: clamp(1.875rem, 1.5865rem + 1.442vw, 3.75rem);
+  font-weight: 600;
+}
+
+.display-5 {
+  font-size: clamp(1.625rem, 1.3942rem + 1.154vw, 3.125rem);
+  font-weight: 500;
+}
+
+.display-6 {
+  font-size: clamp(1.5rem, 1.327rem + 0.865vw, 2.625rem);
+  font-weight: 400;
+}
+
+.display-7 {
+  font-size: clamp(1.375rem, 1.2404rem + 0.673vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+/* ============================================================
+   Background colour helpers
+   ============================================================ */
+
+.bg-1 {
+  background-color: var(--bg-1);
+  color: var(--bg-color);
+}
+
+/* ============================================================
+   Pill badge
+   ============================================================ */
+
+.pill {
+  background-color: var(--bg-1);
+  display: inline-block;
+  line-height: 1;
+  padding: 8px 16px;
+  border-radius: 100vw;
+  text-transform: uppercase;
+  font-size: clamp(0.75rem, 0.625rem + 0.5vw, 1rem - 2px);
+}
+
+/* ============================================================
+   Primary CTA button
+   ============================================================ */
+
+.btn-website {
+  background-color: var(--color-cta);
+  color: #ffffff;
+  border: none;
+  min-width: 240px;
+  padding: 1.025rem 2rem;
+  font-size: calc(1rem + 1px);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  border-radius: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    background-color 0.6s ease-in-out;
+}
+
+.btn-website:hover {
+  transform: scale(1.04);
+}
+
+/* ============================================================
+   Container (was provided by Bootstrap)
+   ============================================================ */
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* ============================================================
+   Badge (was provided by Bootstrap)
+   ============================================================ */
+
+.badge {
+  display: inline-block;
+  padding: 0.25em 0.625em;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  border-radius: 0.375rem;
+}
+
+/* ============================================================
+   Progress bar (was provided by Bootstrap)
+   ============================================================ */
+
+.progress {
+  display: flex;
+  overflow: hidden;
+}
+
+.progress-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  transition: width 0.6s ease;
+}
+
+/* ============================================================
+   Heading size utilities (was provided by Bootstrap)
+   ============================================================ */
+
+.h5 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.h6 {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* ============================================================
+   Interactive grid wrapper
+   ============================================================ */
+
+.interactive-grid-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+}

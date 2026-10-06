@@ -1,0 +1,240 @@
+.section {
+  display: block;
+  padding: 6rem 1.5rem 3rem;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 6rem 3rem 3rem;
+  }
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .layout {
+    flex-direction: row-reverse;
+  }
+}
+
+.leftSide {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .leftSide {
+    width: 50%;
+  }
+}
+
+.heading {
+  font-size: 1.875rem;
+  font-weight: 300;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  color: var(--color-heading);
+  transition: all 0.3s;
+}
+
+@media (min-width: 768px) {
+  .heading {
+    font-size: 3rem;
+  }
+}
+
+.layout:hover .heading {
+  background: linear-gradient(
+    to var(--inline-end),
+    var(--color-heading),
+    color-mix(in srgb, var(--color-heading), white 45%)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.headingAccent {
+  font-weight: 500;
+}
+
+.divider {
+  width: 3rem;
+  height: 0.25rem;
+  background-color: var(--color-heading);
+  border-radius: 9999px;
+}
+
+.subtext {
+  font-size: 1.25rem;
+  color: rgb(107, 114, 128);
+  font-weight: 300;
+  line-height: 1.625;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  list-style: none;
+  padding-inline-start: 0;
+  margin: 0;
+}
+
+.listItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 1.125rem;
+  color: rgba(26, 26, 26, 0.8);
+}
+
+.listItem svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #d8c7b8;
+  flex-shrink: 0;
+}
+
+.rightSide {
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .rightSide {
+    width: 50%;
+  }
+}
+
+.card {
+  background-color: white;
+  border-radius: 2rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  border: 1px solid rgba(26, 26, 26, 0.05);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.cardImgWrapper {
+  position: relative;
+}
+
+.cardImg {
+  width: 100%;
+  height: 12rem;
+  object-fit: cover;
+  object-position: center 30%;
+  border-bottom: 1px solid rgba(26, 26, 26, 0.05);
+}
+
+.cardLink {
+  position: absolute;
+  top: 1rem;
+  inset-inline-end: 1rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem;
+  border-radius: 9999px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px
+    rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.cardLink:hover {
+  background-color: white;
+}
+
+.cardLink svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #1a1a1a;
+}
+
+.cardBody {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.jobRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgb(243, 244, 246);
+  padding-bottom: 1.5rem;
+}
+
+.jobRowLast {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.jobTitle {
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
+.jobSub {
+  color: rgb(156, 163, 175);
+}
+
+.badgeHigh {
+  padding: 0.5rem 1rem;
+  background-color: rgb(240, 253, 244);
+  color: rgb(22, 163, 74);
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  border: 1px solid rgb(220, 252, 231);
+  white-space: nowrap;
+}
+
+.badgeMed {
+  padding: 0.5rem 1rem;
+  background-color: rgb(254, 252, 232);
+  color: rgb(202, 138, 4);
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  border: 1px solid rgb(254, 249, 195);
+  white-space: nowrap;
+}
+
+.badgeLow {
+  padding: 0.5rem 1rem;
+  background-color: rgb(254, 242, 242);
+  color: rgb(220, 38, 38);
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  border: 1px solid rgb(254, 226, 226);
+  white-space: nowrap;
+}
+
+.decor {
+  position: absolute;
+  z-index: -10;
+  bottom: -1.5rem;
+  inset-inline-end: -1.5rem;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(216, 199, 184, 0.2);
+  border-radius: 2rem;
+}

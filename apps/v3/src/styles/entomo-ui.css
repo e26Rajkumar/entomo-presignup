@@ -1,0 +1,2476 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&display=swap");
+@import "tailwindcss";
+@source "../**/*.{tsx,ts,js,jsx}";
+
+/* ============================================================
+   @entomo/ui — B2C Design System
+   Tailwind v4 CSS-first Theme with Light/Dark Mode Support
+   Import this in each app: @import '@entomo/ui/global.css';
+   ============================================================ */
+
+/* ── Design Tokens ─────────────────── */
+@theme {
+  /* Font */
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-manrope: "Manrope", system-ui, sans-serif;
+  --font-montserrat: "Montserrat", system-ui, sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-heavy: 900;
+
+  /* Colors — light (default) */
+  --color-primary: #ffc626;
+  --color-primary-dark: #ffc626;
+  --color-primary-medium: #fcd358;
+  /* Lighter interactive yellow for filled buttons — the literal lives here so
+     colours stay centralised; web opts into it via --color-primary-button. */
+  --color-interactive-yellow: #f9e26b;
+  /* Filled-button background. Defaults to --color-primary so consuming apps
+     (admin/superadmin) follow their own primary; web overrides this with
+     --color-interactive-yellow in web/src/index.css. */
+  --color-primary-button: var(--color-primary);
+  /* Hover shade for filled buttons — a darker version of the live button
+     colour. Derived via color-mix so it tracks tenant branding automatically:
+     BrandingThemeStyle only overrides --color-primary-button, and this resolves
+     against that at use time. Generates the `hover:bg-primary-button-hover`
+     utility. */
+  --color-primary-button-hover: color-mix(
+    in srgb,
+    var(--color-primary-button) 85%,
+    black
+  );
+  /* dict brand palette — Career Path selection pills (one colour per screen) */
+  --color-dict-blue: #203e64;
+  --color-dict-yellow: #f9e26b;
+  --color-dict-red: #e45b40;
+  --color-dict-amber: #ffbf00;
+  --color-yellow-primary: #f4c542;
+  --color-bg: #f5f7f9;
+  --color-on-text-primary: #000000;
+  /* Text/icon on a genuine bg-primary/bg-primary-button surface. Split from
+     --color-on-text-primary (a generic theme-flip token with unrelated
+     consumers elsewhere) so web's BrandingThemeStyle can safely override
+     this one per-tenant without also repainting text on plain bg-card
+     surfaces that happen to reuse the same generic token. */
+  --color-primary-button-foreground: #000000;
+  --color-text: #030712;
+  --color-text-dark: #030720;
+  --color-secondary: #364153;
+  --color-secondary-text: #364153;
+  --color-secondary-light: #b4b5bd;
+  --color-static-secondary: #364153;
+  --color-static-text: #030712;
+  --color-rating: #6f6a85;
+  --color-gold: #ffd700;
+  --color-secondary-text: #000000b2;
+  --color-border: #d9d9d9;
+  --color-border-subtle: #0000001a; /* hairline border on light card surfaces */
+  --color-border-muted: #4d463533; /* warm-toned divider, e.g. summary panels */
+  --color-card-bg: #ffffff;
+  --color-employer-bg: #f9fafb;
+  --color-toolbar-active-bg: #ffffff;
+  --color-toolbar-active-text: #030712;
+  /* Decorative "deck" layers stacked behind a card; stack-2 sits furthest back
+     so it reads slightly darker than stack-1. */
+  --color-card-stack-1: #f4f4f6;
+  --color-card-stack-2: #ececef;
+  --color-card-bg-dark: #1a1f2e;
+  --color-card-dark: #f2f2f4;
+  --color-overlay: #000000;
+  --color-tertiary: #eceaf6;
+  --color-tertiary-dark: #dce1ff;
+  --color-profile-border-bg: #e2e8f0;
+  --color-user-text: #020618;
+  --color-email-text: #62748e;
+  --color-hover-bg: #f0f0f0;
+  --color-action-text: #111111;
+  --color-profile-text: #314158;
+  --color-surface-faded: #e0e0e0;
+  --color-surface-action: #f1f3f5;
+  --color-surface-action-hover: #e5e7eb;
+  --color-surface-action-text: #111111;
+  --color-stepper-track: #d1d5db;
+  --color-icon-muted: #9ca3af;
+  --color-text-strong: #0e0f42;
+  --color-inactive-text: #686a79;
+  --color-gray-dark: #666666;
+  --color-gray-medium: #737373;
+  --body-secondary-text: #000000b2;
+  --color-surface-neutral-light: #f2f2f4;
+  --color-surface-muted: #e6e7e9;
+  --color-heading-medium: #686a79;
+  --color-heading-dark: #030720;
+  --color-insight-card-job-title: #2a3439;
+  --color-insight-card-sub-title: #566166;
+  --color-insight-critical-title: #752121;
+  --color-insight-critical-header-bg: #fe8983;
+  --color-insight-warning-title: #92400e;
+  --color-insight-warning-header-bg: #fde68a;
+  --color-insight-niche-title: #435368;
+  --color-insight-niche-header-bg: #d3e4fe;
+  --color-insight-healthy-title: #166534;
+  --color-insight-healthy-header-bg: #bbf7d0;
+  --color-insight-card-button-text: #f7f7ff;
+  --color-insight-card-button-bg: #e1e9ee;
+  --color-insight-card-button-border: #a9b4b9;
+  --color-insight-card-border: #d9e4ea;
+  --color-field-input: #f2f2f2;
+  --color-gray-100: #f4f4f4;
+  --color-gray-500: #6a7282;
+  --color-gray-600: #4b5563;
+  --color-yellow-600: #ca8a04;
+  --color-primary-blue: #0077ff;
+  --color-lavender-gray: #9b97ad;
+  --color-secondary-blue: #1433ff;
+  --color-dark-blue: #7285ff;
+  --color-primary-gray: #cdcdd2;
+  --color-success: #22c55e;
+  --color-info: #3b82f6;
+  --color-destructive: #ef4444;
+  --color-destructive-soft: #f43f5e;
+  --color-accent-red: #fe3c58;
+  --color-accent-red-soft: #f43f5e33;
+  --color-creamy-yellow: #fce09e;
+  --color-creamy-white: #fffaeb;
+  /* AI-assist accent gradient (e.g. "generate with AI" CTAs). */
+  --color-ai-accent-start: #ec4899;
+  --color-ai-accent-end: #d946ef;
+  --color-course-cover-default: #3fa7a2;
+  --color-course-completed: #10b981;
+  --color-primary-light: #393d464d;
+  --color-primary-green: #00a81f;
+  --color-error: #e7000b;
+  --color-indigo: #4f39f6;
+  --color-indigo-100: #c7d2fe;
+  --color-indigo-400: #7c86ff;
+  --color-indigo-500: #615fff;
+  --color-indigo-600: #4f46e5;
+  --color-violet-500: #8e51ff;
+  --color-violet-600: #7f22fe;
+  --color-amber-100: #fef3c6;
+  /* Power Up Your Path animated gradient stops. */
+  --color-path-gradient-indigo: #6366f1;
+  --color-path-gradient-gold: #ffc72c;
+  /* Pre-signup v1 "Toolkit Features" bento cards — one bespoke colour per card. */
+  --color-toolkit-section-bg: #fafafa;
+  --color-toolkit-section-border: #e2e8f0;
+  --color-toolkit-heading: #0f172a;
+  --color-toolkit-card-resume: #e0d7f4;
+  --color-toolkit-card-resume-accent: #581c87;
+  --color-toolkit-card-resume-body: #334155;
+  --color-toolkit-card-cover: #203e64;
+  --color-toolkit-card-flashcards: #f9e26b;
+  --color-toolkit-card-flashcards-heading: #451a03;
+  --color-toolkit-card-flashcards-accent: #78350f;
+  --color-toolkit-card-mock: #e45b40;
+  --color-toolkit-card-mock-heading: #ffffff;
+  --color-toolkit-card-mock-accent: #ffffff;
+  --color-slate-50: #f8fafc;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-800: #1e293b;
+  --color-neutral-50: #f8fafc;
+  --color-surface-pinned: #f4f3fe;
+  --color-on-dark: #ffffff;
+  --color-success-bg: #f0fff4;
+  --color-success-bd: #86efac;
+  --color-success-fg: #166534;
+  --color-error-bg: #fff1f2;
+  --color-error-bd: #fca5a5;
+  --color-error-fg: #991b1b;
+  --color-suspended: #924042;
+  --color-on-dark-bg: #000000;
+  --color-danger: #ee1115;
+  --color-card-body: #e5e7eb;
+  --color-body-text: #030712;
+  --color-icon-dark: #030720;
+  --color-border-neutral-light: #e6e7e9;
+  --color-default-border: #e5e7eb;
+  --color-primary-50: #dce1ff;
+  --color-primary-500: #1433ff;
+  --color-border-warning-light: #fcc299;
+  --color-border-error-light: #f57072;
+  --color-warning-dark: #953e00;
+  --color-warning-light: #fff4e5;
+  /* "You can edit this later" info note on the mandatory onboarding modal
+     (B2B2C||Mandatory Employment and Sectoral Information During
+     Onboarding, AC15). Figma: bg rgba(255,251,235,.9), border
+     rgba(253,230,138,.9), icon #D99415, text #442E07 — none of the existing
+     warning/amber tokens above match all four exactly. */
+  --color-info-note-bg: rgb(255 251 235 / 90%);
+  --color-info-note-border: rgb(253 230 138 / 90%);
+  --color-info-note-icon: #d99415;
+  --color-info-note-text: #442e07;
+  /* Jobs-filter location dropdown (B2B2C-262 redesign) — the closed-trigger
+     chip and the selected option-list row share this background; text and
+     the checked-checkbox fill are separate, distinct shades (see below).
+     Figma: bg #FFF9EA; chip text #92510C; selected-row text #B56603;
+     checkbox fill #F59E0B. */
+  --color-location-chip-bg: #fff9ea;
+  --color-location-chip-text: #92510c;
+  --color-location-selected-text: #b56603;
+  --color-location-chip-checked: #f59e0b;
+  --color-success-dark: #006512;
+  --color-success-light: #b3e5bc;
+  --color-surface-neutral-default: #e6e7e9;
+  --color-text-body-black: #000000;
+  --color-text-body-white: #ffffff;
+  --color-text-body-contrast: #000000;
+  --color-surface-secondary-default: #ffd900;
+  --color-text-body-medium: #686a79;
+  --color-surface-neutral-dark: #030720;
+  --color-text-body-dark: #030720;
+  --color-secondary-blue: #7285ff;
+  --color-primary-gray: #cdcdd2;
+  --color-form-label: #1f2937;
+  --color-input-text: #6b7280;
+  --color-card-yellow-soft: #fdf6e3;
+  --color-card-purple-soft: #f6eef9;
+  --color-card-green-soft: #eaf7ef;
+  --color-surface-accent: #b3d7ff;
+  --color-info-dark: #004799;
+  --color-green-pop-up: #b3e5bc;
+  --color-success-dark: #006512;
+  --color-error-toast-bg: #fed7d7;
+  --color-badge-accent-bg: #ebe1fd;
+  --color-badge-accent-text: #762ae8;
+  --color-pill-active-bg: #e9d5ff;
+  --color-pill-active-text: #7e22ce;
+  --color-surface-accent-secondary: #f1e8fd;
+  --color-surface-accent-tertiary: #e8e2ff;
+  --color-verified-badge-bg: #ecfaf4;
+  --color-verified-badge-border: rgb(165 221 196 / 60%);
+  --color-verified-badge-text: #198854;
+  --color-field-label-muted: #999ea6;
+  --color-icon-locked: #c7ccd1;
+  --color-profile-link-text: #4e49d3;
+  --color-profile-header-gradient-from: #464c53;
+  --color-profile-header-gradient-via: #5a6065;
+  --color-profile-header-gradient-to: #646a71;
+  --color-profile-avatar-gradient-from: #635cea;
+  --color-profile-avatar-gradient-to: #8b5dd5;
+  --color-profile-heading-text: #171717;
+  --color-profile-subtitle-text: #646971;
+  --color-profile-edit-btn-border: #d1d5da;
+  --color-profile-edit-btn-text: #262626;
+  --color-profile-card-divider: #ededed;
+  --color-profile-card-description: #80858c;
+  --color-profile-card-border: #e8e8e8;
+  --color-profile-field-value-text: #17171c;
+  --color-surface-accent-warm: #fdf5ea;
+  --color-accent-strong: #e60245;
+  --color-orange-primary: #fde8c9;
+  --color-emerald-primary: #d8ede9;
+  --color-rose-primary: #fdedf5;
+  --color-blue-primary: #7c5cfc;
+  --color-light-blue-primary: #4a90d9;
+  --color-green-primary: #26c6a2;
+  --color-violet-primary: #f5a623;
+  --color-yellow-secondary: #a16207;
+  --color-muted-text: #6f6a85;
+  --color-border-gray: #f3f4f6;
+  --color-career-gray-light: #a1a1a1;
+  --color-career-gray-60: #707070;
+  --color-career-gray-55: #646e80;
+  --color-periwinkle-50: #edebff;
+  --color-career-section-bg: #fafafa;
+  /* Career Path area/card accents */
+  --color-career-accent-1: #e11d48;
+  --color-career-accent-2: #f97316;
+  --color-career-accent-3: #eab308;
+  --color-career-accent-4: #84cc16;
+  --color-career-accent-5: #22c55e;
+  --color-career-accent-6: #14b8a6;
+  --color-career-accent-7: #0891b2;
+  --color-career-accent-8: #2563eb;
+  --color-career-accent-9: #4f46e5;
+  --color-career-accent-10: #7c3aed;
+  --color-career-accent-11: #c026d3;
+  --color-career-accent-12: #db2777;
+  --color-announcement-card: #d1289233;
+  --color-transparent-black: #0000001a;
+  --color-avatar-background: #edf0f2;
+  --color-text-label-destructive: #f50f0f;
+  --color-indigo-mist: #5b6abf;
+  --color-light-lavender: #aaa3bc;
+  --color-blue-gray: #687690;
+  --color-blue-gray-50: #f5f7f9;
+  --color-dark-navy: #071b34;
+  --color-golden-brown: #5c4800;
+  --color-golden-yellow: #ffc547;
+  --color-secondary-green: #02a302;
+  --color-tertiary-green: #4ade80;
+  --color-chip-bg: #edfcf3;
+  --color-amber-sun: #ffba2a;
+  --color-amber-light: #f7cf69;
+  --color-amber-tint: #ffe8a1;
+  --color-solar-amber: #f6c343;
+  --color-amber-red: #fee2e2;
+  --color-secondary-dark: #e5e5e8cc;
+  --color-primary-divider: #e5e5e8;
+  --color-neutral-500: #70707a;
+  --color-neutral-400: #fafafa80;
+  --color-secondary-divider: #a1a1a8;
+  --color-amber-red-dark: #fecaca;
+  /* Gradient end stop for the selected career-path pill / current-step
+     circle (Figma: #FFE8A1 -> #FFBC31) — distinct from --color-amber-sun. */
+  --color-amber-strong: #ffbc31;
+  /* Selected pill role-name text (Figma: #000000 @ 80%). */
+  --color-role-selected-text: #000000cc;
+  /* Target role name on the generated path view (Figma literal gold). */
+  --color-role-gold: #ffd700;
+  --color-shadow-blue: #0b162e;
+  --color-reset-btn: #ff0004;
+  --color-white-smoke: #f5f5f5;
+  --color-bright-green: #4ade80;
+  --color-ice-green: #edfcf3;
+  --color-brand-blue: #155dfc;
+  --color-cool-mist: #99a1af;
+  --color-pale-pink: #fdf0f0;
+  --color-ivory-rose: #fcdcdd;
+  --color-error-light: #ff5c5c;
+  --color-guage-muted: #f1f5f9;
+  --color-guage-active: #16a34a;
+  --color-dark-red: #b91c1c;
+  --color-slate-gray: #717c82;
+  --color-gold-light: #ffd70008;
+  --color-muted-steel-blue: #d9e4ea;
+  --color-pale-blue-gray: #f0f4f7;
+  --color-light-blue-gray: #a9b4b91a;
+  /* Link / breadcrumb accent */
+  --color-link: #187fe4;
+
+  /* Employer stats — funnel stage fills + summary-card corner accents */
+  --color-funnel-applicants: #1f2937;
+  --color-funnel-shortlisted: #4f46e5;
+  --color-funnel-interviewed: #9333ea;
+  --color-funnel-offered: #10b981;
+  --color-stat-accent-neutral: #94a3b8;
+  --color-stat-accent-offered: #10b981;
+  --color-stat-accent-rejected: #f87171;
+  /* Summary-card label text — muted slate-blue. */
+  --color-stat-label: #506076;
+  /* Summary-card value figure — dark slate. */
+  --color-stat-value: #2a3439;
+  /* Critical insight CTA — solid dark navy button. */
+  --color-cta-dark: #0f172a;
+  /* Summary-card icon badges — soft tinted backgrounds + a shared slate glyph.
+     Self-contained accent badges (light tint + dark glyph) that read in both
+     themes, so they intentionally don't flip in dark mode. */
+  --color-stat-icon-fg: #435368;
+  --color-stat-icon-posted-bg: #dae2fd;
+  --color-stat-icon-active-bg: #edfdf2;
+  --color-stat-icon-applicants-bg: #ffe8eb;
+  --color-scoremeter-bg: #27354c;
+  --color-notification-bg: #ff30b6;
+
+  /* Shadows */
+  --shadow-sm: 0px 0px 12px 0px rgb(0 0 0 / 0.1);
+  --shadow-md: 0px 6px 13px 0px rgba(0, 0, 0, 0.15);
+  --shadow-card: 0 1px 2px -1px rgb(0 0 0 / 0.1), 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  --shadow-stepper: 0px 4px 6px -2px rgba(0, 0, 0, 0.05), 0px 10px 15px -3px
+    rgba(0, 0, 0, 0.1);
+  /* Range-slider thumb — two-layer ambient lift on the white pill. */
+  --shadow-slider-thumb: 0px 4px 6px -4px #0000001a, 0px 10px 15px -3px
+    #0000001a;
+  --shadow-drop-shadow: 0px -4px 4px 0px rgba(0, 0, 0, 0.07);
+  --shadow-glass: 0px 4px 30px 0px rgba(0, 0, 0, 0.1);
+  /* Selected career-path pill / current-step circle glow (Figma: #F2CA50 @ 40%, 30px blur). */
+  --shadow-amber-glow: 0px 0px 30px 0px rgb(242 202 80 / 0.4);
+  /* Soft ambient shadow on the Interview IQ card and its stacked "deck" layers. */
+  --shadow-card-deck: 0px 12px 48px 0px #010e241a;
+  /* Recessed well effect for nested preview panels, e.g. the Keep It Going card. */
+  --shadow-inset-card: inset 0px 2px 12px 0px rgba(0, 0, 0, 0.08);
+  --shadow-job-card: 0px 1px 2px 0px rgba(0, 0, 0, 0.04);
+
+  /* Blur */
+  --blur-glass: 16px;
+  --shadow-primary: 0px 2px 12px 0px #00000014;
+  /* Summary-card surface — subtle drop shadow, no border. */
+  --shadow-stat-card: 0px 1px 2px 0px #0000000d;
+
+  /* Backgrounds */
+  --background-image-action-bar: linear-gradient(
+    90deg,
+    #1a1a1ae6 0%,
+    #35394de6 100%
+  );
+  --background-image-primary-gradient: linear-gradient(
+    180deg,
+    #081466 0%,
+    #030720 100%
+  );
+  --background-image-gold-shine: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #ffd700 50%,
+    #ffffff 100%
+  );
+  --background-image-corner-glow: radial-gradient(
+    circle at top right,
+    #fff3c4 0%,
+    #fffbea 45%,
+    transparent 70%
+  );
+  --background-image-frosted-panel: radial-gradient(
+    ellipse 60% 50% at 50% 50%,
+    rgba(255, 255, 255, 0.92) 0%,
+    rgba(255, 255, 255, 0.6) 45%,
+    transparent 72%
+  );
+  --background-image-frosted-panel-dark: radial-gradient(
+    ellipse 60% 50% at 50% 50%,
+    rgba(26, 31, 46, 0.92) 0%,
+    rgba(26, 31, 46, 0.6) 45%,
+    transparent 72%
+  );
+  --background-image-optimize: linear-gradient(
+    90deg,
+    #ff7a45 0%,
+    #ff4d8b 50%,
+    #9c5cff 100%
+  );
+  --background-image-corner-glow-light: radial-gradient(
+    circle at top right,
+    #ffd7001a 0%,
+    transparent 70%
+  );
+
+  /* Career Path scattered-pill backgrounds — multi-stop radial gradient
+     compositions, one per selection step (Areas / Domains / Roles). Defined
+     here so the palette has a single owner; consumed via Tailwind v4's
+     auto-generated `bg-pill-bg-*` utilities in `ScatteredPillSelectionView`. */
+  --background-image-pill-bg-areas: radial-gradient(
+      at 15% 15%,
+      var(--color-dict-blue) 0,
+      transparent 55%
+    ), radial-gradient(at 85% 15%, var(--color-dict-yellow) 0, transparent 55%),
+    radial-gradient(at 50% 90%, var(--color-dict-red) 0, transparent 60%),
+    linear-gradient(180deg, #fafafa 0%, #fafafa 100%);
+  --background-image-pill-bg-domains: radial-gradient(
+      at 10% 20%,
+      var(--color-dict-blue) 0,
+      transparent 55%
+    ), radial-gradient(at 92% 18%, var(--color-dict-yellow) 0, transparent 55%),
+    radial-gradient(at 45% 92%, var(--color-dict-red) 0, transparent 60%),
+    linear-gradient(180deg, #fafafa 0%, #fafafa 100%);
+  --background-image-pill-bg-roles: radial-gradient(
+      at 12% 18%,
+      var(--color-dict-blue) 0,
+      transparent 55%
+    ), radial-gradient(at 88% 22%, var(--color-dict-yellow) 0, transparent 55%),
+    radial-gradient(at 85% 85%, var(--color-dict-red) 0, transparent 60%),
+    linear-gradient(180deg, #fafafa 0%, #fafafa 100%);
+
+  /* Selected career-path pill fill (Figma: #FFE8A1 -> #FFBC31). Also reused
+     on the current-step circle in PathStepper — same gradient in both specs. */
+  --background-image-pill-selected: linear-gradient(
+    135deg,
+    var(--color-amber-tint) 0%,
+    var(--color-amber-strong) 100%
+  );
+
+  --color-primary-500: #1433ff;
+  --color-border-warning-light: #fcc299;
+  --color-text-warning-dark: #953e00;
+  --color-secondary-100: #fff4b3;
+  --color-secondary-800: #665700;
+  --color-info-light: #dbeafe;
+  --color-info-dark: #1d4ed8;
+  --color-job-chip-surface: #565e741a;
+  --color-job-chip-surface-strong: #565e7433;
+
+  /* Skill proficiency palette — dot fill, chip border, chip background per
+     proficiency level. Shared by `SkillsSectionContent` and the Add Skill
+     modal so the swatch lives in one place. A single light-to-dark amber/gold
+     scale (beginner lightest, expert deepest) per the Skills Matching spec. */
+  --color-skill-beginner-dot: #fbbf24;
+  --color-skill-beginner-bd: #fde68a;
+  --color-skill-beginner-bg: #fffbeb;
+  --color-skill-intermediate-dot: #f59e0b;
+  --color-skill-intermediate-bd: #fcd34d;
+  --color-skill-intermediate-bg: #fef3c7;
+  --color-skill-advanced-dot: #d97706;
+  --color-skill-advanced-bd: #fbbf24;
+  --color-skill-advanced-bg: #fde68a;
+  --color-skill-expert-dot: #92400e;
+  --color-skill-expert-bd: #d97706;
+  --color-skill-expert-bg: #f59e0b;
+  /* "+" icon on a missing/add skill chip. */
+  --color-skill-add-icon: #2563eb;
+  /* Dot on a missing/add skill chip — no proficiency level yet, so it's a
+     neutral fill rather than one of the proficiency colors above. */
+  --color-skill-empty-dot: #e5e7eb;
+
+  /* Skill suggestion card — pink → violet gradient with magenta accent for
+     the sparkle line. Used by the "You might want to add these skills"
+     panel on the master-profile Skills section. */
+  --color-suggestion-bg-start: #fef3f4;
+  --color-suggestion-bg-mid: #fdf2fb;
+  --color-suggestion-bg-end: #eef1ff;
+  --color-suggestion-border: #f4d5e3;
+  --color-suggestion-accent: #c026d3;
+
+  /* Typography */
+  --text-display: 40px;
+  --leading-display: 60px;
+  --tracking-display: -1.5px;
+  --tracking-pill: 0.6px;
+  --tracking-profile-avatar: 2px;
+  --tracking-profile-heading: -0.3px;
+  --text-nudge: 32px;
+  --leading-nudge: 40px;
+  --text-h1: 24px;
+  --leading-h1: 32px;
+  --text-h2: 22px;
+  --leading-h2: 30px;
+  --text-h3: 20px;
+  --leading-h3: 28px;
+  --text-h6: 20px;
+  --leading-h6: 28px;
+  --text-body-lg: 16px;
+  --leading-body-lg: 24px;
+  --text-body: 14px;
+  --leading-body: 22px;
+  --text-body-sm: 12px;
+  --leading-body-sm: 20px;
+  --text-label: 12px;
+  --leading-label: 20px;
+  --text-btn: 16px;
+  --leading-btn: 24px;
+  --text-user: 15px;
+  --leading-user: 19px;
+  --text-email: 13px;
+  --text-2xs: 11px;
+  --leading-btn-lg: 16px;
+  --text-4xs: 8px;
+  --text-3xs: 10px;
+  --text-h4: 18px;
+  --leading-h4: 26px;
+  --text-menu: 15px;
+  --leading-menu: 22.5px;
+  --leading-insight-card-job-title: 22.75px;
+  --text-meta: 10px;
+  --leading-full: 100%;
+  --text-card-xl: 96px;
+  --text-label-md: 14px;
+  --text-body-md: 16px;
+  --leading-label-md: 16px;
+  --text-h5: 24px;
+  --leading-h5: 32px;
+  --leading-body-md: 20px;
+  --text-percentage: 64px;
+  --text-percentage-sm: 40px;
+  --leading-xs: 15px;
+  --text-group-label: 15px;
+  --text-sm: 14px;
+  --text-xxl: 24px;
+  --text-percentage-md: 36px;
+  --leading-xxl: 36px;
+  --text-comment-body: 18px;
+  --text-nudge-subtext: 20px;
+  --leading-announcement-labels: 18px;
+  --leading-h3-sm: 26px;
+  --text-display-medium: 56px;
+  --text-heading: 30px;
+  /* Spacing */
+  --spacing-0: 0px;
+  --spacing-half: 2px;
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-4\.5: 18px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-7: 28px;
+  --spacing-8: 32px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+  --spacing-20: 80px;
+  --spacing-24: 96px;
+  --spacing-32: 128px;
+  --spacing-35: 140px;
+  --spacing-46: 184px;
+  --spacing-47: 188px;
+  --spacing-75: 300px;
+  --spacing-profile-avatar: 72px;
+  /* Mobile career-path step card width/text cap — wider than --spacing-75 so
+     role names wrap onto fewer lines. */
+  --spacing-stepper-card: 340px;
+  --spacing-295: 295px;
+  --spacing-125: 500px;
+  --spacing-85vh: 85vh;
+  --spacing-90vw: 90vw;
+
+  --container-page: 1280px;
+  --container-page-narrow: 1100px;
+
+  /* Header height — the global app header reserves this much vertical space.
+     Pages that own their own internal scroll (career-path/details,
+     master-profile/details) subtract it from the viewport height so the
+     internal section can scroll without the page itself scrolling. */
+  --spacing-header: 90px;
+  /* Jobs-tab panes: viewport minus header above and matching space below. */
+  --spacing-jobs-pane: calc(100vh - 2 * var(--spacing-header));
+
+  --spacing-job: 60px;
+  --spacing-career: 65px;
+
+  /* Grid Templates */
+  --grid-template-columns-master-profile: 320px 232px 1fr;
+
+  /* Height — minimum heights for full-pane loading/empty states. */
+  --height-loader: 60vh;
+  /* Min height for the centered Interview IQ question stage. */
+  --height-iq-stage: 80vh;
+
+  /* Spacing — mobile tab-bar height. Used as bottom padding on pages that
+     render alongside MobileTabBar so content isn't occluded by the fixed
+     bar. Keep in sync with the bar's actual visual height in
+     `components/ui/mobile-tab-bar`. */
+  --spacing-mobile-tab-bar: 80px;
+
+  /* Vertical padding for the SearchBar / RoleSearchAutocomplete pill button so
+     it matches the input column height. The 12.5px value is half-pixel by
+     design — it aligns the pill height with the adjacent input on a single
+     rounded baseline grid. */
+  --spacing-search-pill: 12.5px;
+  --spacing-search-pill-sm: 0.5625rem;
+
+  /* Vertical padding for category-tabs secondary variant pill styling. */
+  --spacing-tab-secondary: 8.5px;
+
+  /* Vertical padding for select-field outlined variant. */
+  --spacing-select-outlined: 15.5px;
+
+  /* Padding for the career-path "View Details" CTA (Figma: 12.5px / 35.5px). */
+  --spacing-btn-cta-y: 12.5px;
+  --spacing-btn-cta-x: 35.5px;
+
+  /* Border Width */
+  --border-width-hairline: 0.8px;
+  --border-width-nav-underline: 3px;
+  /* Employer master profile header avatar circle ring */
+  --border-width-profile-avatar: 3px;
+
+  /* date picker height */
+  --date-picker-grid-height: 300px;
+  /* Border Radius */
+  --radius-none: 0px;
+  --radius-sm: 2px;
+  --radius: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-large: 200px;
+  --radius-pill: 9999px;
+  --radius-capsule: 40px;
+  /* Interview IQ card + its stacked "deck" layers. */
+  --radius-card-deck: 64px;
+  /* pre-signup v1 "Toolkit Features" bento cards. */
+  --radius-toolkit-card: 36px;
+
+  /* Breakpoints */
+  --breakpoint-xs: 375px;
+  --breakpoint-phone: 448px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-mid: 900px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+
+  /* Animations */
+  --animate-slide-in-from-left: slide-in-from-left 280ms
+    cubic-bezier(0.32, 0.72, 0, 1);
+  --animate-slide-out-to-left: slide-out-to-left 220ms
+    cubic-bezier(0.32, 0.72, 0, 1);
+  --animate-slide-in-from-right: slide-in-from-right 280ms
+    cubic-bezier(0.32, 0.72, 0, 1);
+  --animate-slide-out-to-right: slide-out-to-right 220ms
+    cubic-bezier(0.32, 0.72, 0, 1);
+  --animate-overlay-fade-in: overlay-fade-in 200ms ease-out;
+  --animate-overlay-fade-out: overlay-fade-out 180ms ease-in;
+  /* "You can't dismiss this" cue — a non-dismissible Modal shakes instead of
+     closing when the backdrop is clicked (disableOutsideClose). */
+  --animate-modal-shake: modal-shake 400ms ease-in-out;
+}
+
+@keyframes slide-in-from-left {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out-to-left {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slide-in-from-right {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out-to-right {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes overlay-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes overlay-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes modal-shake {
+  10%,
+  90% {
+    transform: translateX(-1px);
+  }
+
+  20%,
+  80% {
+    transform: translateX(2px);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translateX(-4px);
+  }
+
+  40%,
+  60% {
+    transform: translateX(4px);
+  }
+}
+
+/* ── Entomo scope — reinstates tokens when host app overrides :root ── */
+[data-theme="light"] {
+  color-scheme: light;
+  --color-primary: #ffc626;
+  --color-bg: #f2f2f2;
+  --color-text: #030712;
+  --color-secondary-text: #364153;
+  --color-border: #d9d9d9;
+  --color-card-bg: #ffffff;
+  --color-tertiary: #eceaf6;
+  --color-error: #e7000b;
+  --color-bg-light: #f2f2f2;
+  --color-surface-muted: #e6e7e9;
+  --color-card-dark: #f2f2f4;
+  --color-primary-dark: #ffc626;
+  --color-body-text: #030712;
+  --color-text-body-contrast: #000000;
+  --color-card-body: #e5e7eb;
+  --color-modal-heading-text: #0f121e;
+  --color-employer-bg: #f9fafb;
+  --color-shadow-blue: #0b162e;
+  --color-neutral-50: #f8fafc;
+}
+
+/* ── Dark Mode overrides ─────────────────────────────────────── */
+.dark,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --color-primary: #ffc626;
+  --color-primary-button: var(--color-primary);
+  --color-primary-button-hover: color-mix(
+    in srgb,
+    var(--color-primary-button) 85%,
+    black
+  );
+  --color-bg: #0b1026;
+  --color-text: #ffffff;
+  --color-secondary-text: #ffffffcc;
+  --color-border: #364153;
+  --color-border-subtle: #ffffff1a; /* hairline border on dark card surfaces */
+  --color-border-muted: #ffffff33; /* warm-toned divider equivalent, on dark */
+  /* Info note (see the light definition above) — same amber hue, dialed down
+     to a translucent tint over the dark card so the banner still reads as
+     "amber attention" without becoming a near-white block on a dark modal. */
+  --color-info-note-bg: rgb(217 148 21 / 15%);
+  --color-info-note-border: rgb(217 148 21 / 35%);
+  --color-info-note-icon: #ffbc31;
+  --color-info-note-text: #fde68a;
+  --color-card-stack-1: #1a2138; /* deck layers behind a card, on dark */
+  --color-card-stack-2: #222a44;
+  --color-card-bg: #131a2f;
+  --color-toolbar-active-bg: #3a445c;
+  --color-toolbar-active-text: #ffffff;
+  --color-tertiary: #364153;
+  --color-surface-muted: #030720;
+  --color-card-dark: #081466;
+  --color-hover-bg: #222b48;
+  --color-field-input: #1a1f2e;
+  --color-heading-medium: #9aa3b2;
+  --color-bg-light: #222b48;
+  --color-shadow-blue: #e2e8f0;
+  --color-neutral-50: #222b48;
+  /* Action-menu rows (Menu variant="actions") default to near-black text; in
+     dark mode that's invisible on the dark card surface. */
+  --color-action-text: #ffffff;
+  --color-body-text: #ffffff;
+  --color-text-body-contrast: #ffffff;
+  --color-card-body: #364153;
+  --color-surface-neutral-light: #1a1f2e; /* card-like dark surface */
+  --color-border-neutral-light: #2a3344; /* subtle dark border */
+  --color-default-border: #2a3344; /* preview/chip pill border on dark */
+  --color-form-label: #cbd5e1; /* field labels — light on dark */
+  --color-input-text: #9aa3b2; /* placeholders */
+  --color-stat-label: #9aa7b8; /* summary-card label */
+  --color-stat-value: #e6e7e9; /* summary-card value figure */
+  --color-cta-dark: #334155; /* critical CTA — lighter so it reads on dark cards */
+  /* Insight card — body text and the non-critical CTA are dark-on-light by
+     default; flip them for the dark card surface. Header bands keep their fixed
+     brand colours (legible in both modes), so only these need overriding. */
+  --color-insight-card-job-title: #e6e7e9;
+  --color-insight-card-sub-title: #9aa7b8;
+  --color-insight-card-border: #2a3344;
+  --color-insight-card-button-bg: #1a1f2e;
+  --color-insight-card-button-border: #2a3344;
+  --color-gray-600: #9ca3af; /* dot-stepper inactive label */
+  --color-yellow-600: #facc15; /* dot-stepper active label */
+  --color-modal-heading-text: #e6e7e9;
+  --color-on-text-primary: #ffffff;
+  --color-primary-button-foreground: #ffffff;
+  --color-text-dark: #ffffffcc;
+  --color-employer-bg: #030720;
+  --color-text-body-dark: #ffffff;
+  --color-inactive-text: #ffffffcc;
+  --color-profile-link-text: #8b85ff;
+  --color-profile-header-gradient-from: #5a6065;
+  --color-profile-header-gradient-via: #6b7178;
+  --color-profile-header-gradient-to: #7c8289;
+  --color-profile-avatar-gradient-from: #7b74f0;
+  --color-profile-avatar-gradient-to: #a480e0;
+  --color-profile-heading-text: #ffffff;
+  --color-profile-subtitle-text: #9aa3b2;
+  --color-profile-edit-btn-border: #2a3344;
+  --color-profile-edit-btn-text: #e6e7e9;
+  --color-profile-card-divider: #2a3344;
+  --color-profile-card-description: #9aa7b8;
+  --color-profile-card-border: #2a3344;
+  --color-profile-field-value-text: #e6e7e9;
+  --color-career-gray-60: #ffffff;
+  --color-career-section-bg: #1d2a42;
+  --color-career-gray-55: #e6e7e9;
+  --color-periwinkle-50: #35304d;
+  --background-image-corner-glow: radial-gradient(
+    circle at top right,
+    rgba(255, 215, 0, 0.14) 0%,
+    rgba(255, 215, 0, 0.05) 45%,
+    transparent 70%
+  );
+}
+
+/* `text-heading-dark` maps to --color-text-dark, which is also the fill for
+   dark surfaces (bg-surface-neutral-dark), so the token can't be flipped.
+   Override the text utility directly in dark mode so headings stay legible. */
+.dark .text-heading-dark,
+[data-theme="dark"] .text-heading-dark {
+  color: var(--color-text);
+}
+
+.dark [data-placeholder].text-heading-dark,
+[data-theme="dark"] [data-placeholder].text-heading-dark {
+  color: var(--color-heading-medium);
+}
+
+/* Let the browser render native input affordances — autofill highlight (incl.
+   its un-styleable preview), caret, controls — in dark instead of the light
+   default. Tied to the app theme, not the OS. */
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea,
+.dark input,
+.dark select,
+.dark textarea {
+  color-scheme: dark;
+}
+
+[data-theme="dark"] option,
+.dark option {
+  background-color: var(--color-card-bg);
+  color: var(--color-text);
+}
+
+[data-theme="dark"] .themed-line-illustration,
+.dark .themed-line-illustration {
+  filter: invert(1);
+}
+
+/* ── Base ────────────────────────────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--leading-body);
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* ── Components ──────────────────────────────────────────────── */
+@layer components {
+  .text-display {
+    font-family: var(--font-manrope);
+    font-size: var(--text-display);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .text-primary-token {
+    color: var(--color-primary-dark);
+  }
+
+  .text-nudge {
+    font-size: var(--text-nudge);
+    line-height: var(--leading-nudge);
+    font-weight: var(--font-weight-bold);
+  }
+}
+
+@utility text-nudge-bold {
+  font-size: var(--text-nudge);
+  line-height: var(--leading-nudge);
+  font-weight: var(--font-weight-bold);
+}
+
+@layer components {
+  .text-nudge-extrabold {
+    font-size: var(--text-nudge);
+    line-height: var(--leading-nudge);
+    font-weight: var(--font-weight-extrabold);
+  }
+
+  .text-nudge-semibold {
+    font-size: var(--text-nudge);
+    line-height: var(--leading-nudge);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  /* 30px / ExtraBold (800) — summary-card value figure. */
+  .text-heading-extrabold {
+    font-size: var(--text-heading);
+    line-height: var(--leading-h1);
+    font-weight: var(--font-weight-extrabold);
+  }
+
+  .text-heading-bold {
+    font-size: var(--text-heading);
+    line-height: var(--leading-h1);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .text-h1 {
+    font-size: var(--text-h1);
+    line-height: var(--leading-h1);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .text-h1-bold {
+    font-size: var(--text-h1);
+    line-height: var(--leading-h1);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .text-h1-semi {
+    font-size: var(--text-h1);
+    line-height: var(--leading-h1);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .text-h1-extrabold {
+    font-size: var(--text-h1);
+    line-height: var(--leading-h1);
+    font-weight: var(--font-weight-extrabold);
+  }
+
+  .text-h1-medium {
+    font-size: var(--text-h1);
+    line-height: var(--leading-h1);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .text-h1-tight {
+    font-size: var(--text-h4);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .text-h2 {
+    font-size: var(--text-h2);
+    line-height: var(--leading-h2);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .text-h2-semibold {
+    font-size: var(--text-h2);
+    line-height: var(--leading-h2);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .text-h2-bold {
+    font-size: var(--text-h2);
+    line-height: var(--leading-h2);
+    font-weight: var(--font-weight-bold);
+  }
+}
+
+@utility text-h3 {
+  font-size: var(--text-h3);
+  line-height: var(--leading-h3);
+  font-weight: var(--font-weight-bold);
+}
+
+@layer components {
+  .text-h3-tight {
+    font-size: var(--text-h3);
+    line-height: var(--leading-full);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .text-h6 {
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--text-h6);
+    line-height: var(--leading-h6);
+  }
+
+  .text-h6-bold {
+    font-weight: var(--font-weight-bold);
+    font-size: var(--text-h6);
+    line-height: var(--leading-h6);
+  }
+
+  .text-h4 {
+    font-size: var(--text-h4);
+    line-height: var(--leading-h4);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .text-h4-heavy {
+    font-size: var(--text-h4);
+    font-weight: var(--font-weight-heavy);
+  }
+
+  .text-h4-bold {
+    font-size: var(--text-h4);
+    line-height: var(--leading-h4);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .text-h4-semibold {
+    font-size: var(--text-h4);
+    line-height: var(--leading-h4);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .text-h4-regular {
+    font-size: var(--text-h4);
+    line-height: var(--leading-h4);
+    font-weight: var(--font-weight-regular);
+  }
+
+  .text-h3-bold {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .text-h3-semibold {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .text-h3-extrabold {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--font-weight-extrabold);
+  }
+
+  .text-coming-soon-title {
+    font-size: var(--text-h3);
+    line-height: var(--leading-nudge);
+    font-weight: var(--font-weight-extrabold);
+  }
+
+  .text-coming-soon-title-lg {
+    font-size: var(--text-nudge);
+    line-height: var(--leading-nudge);
+    font-weight: var(--font-weight-extrabold);
+  }
+
+  .text-nudge-subtext-bold {
+    font-size: var(--text-nudge-subtext);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .text-cover-title {
+    font-size: var(--text-h2);
+    line-height: var(--leading-h2);
+    font-weight: var(--font-weight-extrabold);
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+  }
+
+  /* Small variant used on the learning-card image fallback (no cover image). */
+  .text-cover-title-sm {
+    font-size: var(--text-sm);
+    line-height: var(--leading-body);
+    text-transform: capitalize;
+  }
+
+  .text-sm-medium {
+    font-size: var(--text-count-label);
+    line-height: var(--leading-btn);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .text-toast-title {
+    font-size: var(--text-h4);
+    line-height: var(--leading-btn);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .text-body-lg {
+    font-size: var(--text-body-lg);
+    line-height: var(--leading-body-lg);
+  }
+
+  .text-body-lg-medium {
+    font-size: var(--text-body-lg);
+    line-height: var(--leading-body-lg);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .text-body-lg-semibold {
+    font-size: var(--text-body-lg);
+    line-height: var(--leading-body-lg);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .text-body-lg-bold {
+    font-size: var(--text-body-lg);
+    line-height: var(--leading-body-lg);
+    font-weight: var(--font-weight-bold);
+  }
+
+  /* Section-group label — e.g. the "You have" / "Missing" headings on the
+     Skills Matching card and their counts. */
+  .text-group-label {
+    font-size: var(--text-group-label);
+    line-height: var(--leading-full);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0;
+  }
+
+  .text-body {
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
+  }
+
+  .text-body-medium {
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .text-body-semibold {
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .text-body-bold {
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .text-body-sm {
+    font-size: var(--text-body-sm);
+    line-height: var(--leading-body-sm);
+  }
+
+  .text-body-sm-medium {
+    font-size: var(--text-body-sm);
+    line-height: var(--leading-body-sm);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .text-body-sm-semibold {
+    font-size: var(--text-body-sm);
+    line-height: var(--leading-body-sm);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .text-body-sm-bold {
+    font-size: var(--text-body-sm);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .text-body-sm-extrabold {
+    font-size: var(--text-body-sm);
+    font-weight: var(--font-weight-extrabold);
+  }
+
+  .text-body-sm-regular {
+    font-size: var(--text-body-sm);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--leading-btn-lg);
+  }
+
+  .text-label {
+    font-size: var(--text-label);
+    line-height: var(--leading-label);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.08em;
+  }
+
+  .text-label-lg {
+    font-size: var(--text-label-md);
+    line-height: var(--leading-full);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+  }
+
+  .career-label-medium {
+    font-size: var(--text-label-md);
+    line-height: var(--leading-full);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .text-label-medium {
+    font-size: var(--text-label);
+    line-height: var(--leading-label);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 0.08em;
+  }
+
+  .text-label-regular {
+    font-size: var(--text-label);
+    font-weight: var(--font-weight-regular);
+  }
+
+  .text-btn {
+    font-size: var(--text-btn);
+    line-height: var(--leading-btn);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .text-btn-bold {
+    font-size: var(--text-btn);
+    line-height: var(--leading-btn);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .text-btn-regular {
+    font-size: var(--text-btn);
+    line-height: var(--leading-btn);
+    font-weight: var(--font-weight-regular);
+  }
+
+  .text-btn-medium {
+    font-size: var(--text-btn);
+    line-height: var(--leading-btn);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .card-head {
+    font-size: var(--text-body);
+    line-height: var(--leading-full);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .text-btn-sm-medium {
+    font-size: var(--text-label);
+    line-height: var(--leading-xs);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .text-btn-xs {
+    font-size: var(--text-body-sm);
+    line-height: var(--leading-full);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .divider-text {
+    font-size: var(--text-body-sm);
+    line-height: var(--leading-full);
+    font-weight: var(--font-weight-extrabold);
+    letter-spacing: .1em;
+  }
+
+  .skill-text {
+    font-size: var(--text-body-sm);
+    line-height: var(--leading-full);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .py-search-pill {
+    padding-top: var(--spacing-search-pill);
+    padding-bottom: var(--spacing-search-pill);
+  }
+
+  .py-tab-secondary {
+    padding-top: var(--spacing-tab-secondary);
+    padding-bottom: var(--spacing-tab-secondary);
+  }
+
+  .py-select-outlined {
+    padding-top: var(--spacing-select-outlined);
+    padding-bottom: var(--spacing-select-outlined);
+  }
+  .py-search-pill-sm {
+    padding-top: var(--spacing-search-pill-sm);
+    padding-bottom: var(--spacing-search-pill-sm);
+  }
+
+  .text-label-sm {
+    font-size: var(--text-email);
+    color: var(--color-text-strong);
+  }
+
+  /* Compact metadata used by the All Career Areas columns/grid surfaces. */
+  .text-career-card-label {
+    font-size: var(--text-3xs);
+    line-height: var(--leading-full);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .career-column-head {
+    font-size: var(--text-body-sm);
+    line-height: var(--leading-full);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 1px;
+  }
+
+  .text-career-card-count {
+    font-size: var(--text-body-sm);
+    line-height: var(--leading-body-sm);
+    font-weight: var(--font-weight-regular);
+  }
+
+  .career-tab-lable {
+    font-size: var(--text-body-sm);
+    line-height: var(--leading-full);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .career-area-label-sm {
+    font-size: var(--text-email);
+    line-height: var(--leading-full);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .text-overline {
+    font-size: var(--text-email);
+    line-height: 1.5;
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 0.015em;
+    text-transform: uppercase;
+  }
+
+  .text-email-regular {
+    font-size: var(--text-email);
+    line-height: var(--leading-label);
+    font-weight: var(--font-weight-regular);
+  }
+
+  .text-email-bold {
+    font-size: var(--text-email);
+    line-height: 100%;
+    font-weight: var(--font-weight-bold);
+  }
+
+  .label-default {
+    font-size: var(--text-label-md);
+    line-height: var(--leading-label-md);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .placeholder-default {
+    font-size: var(--text-body-md);
+    line-height: var(--leading-body-md);
+    font-weight: var(--font-weight-regular);
+  }
+
+  .card-header-title {
+    font-size: var(--text-h6);
+    line-height: var(--leading-btn);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .sm-normal {
+    font-size: var(--text-sm);
+    line-height: var(--leading-body-md);
+    font-weight: var(--font-weight-regular);
+  }
+
+  .xxl-bold {
+    font-size: var(--text-xxl);
+    line-height: var(--leading-xxl);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .nudge-subtext {
+    font-size: var(--text-nudge-subtext);
+    line-height: 100%;
+    font-weight: var(--font-weight-regular);
+  }
+
+  .text-title-lg {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h1);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .text-path {
+    font-size: var(--text-h4);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--leading-h3);
+  }
+
+  /* Selected career-path pill role-name text (Figma: Inter Medium 20px/16px,
+     #000 @ 80%). Not named `text-*` — tailwind-merge treats that prefix as
+     the color slot, which would silently drop this bundled rule. */
+  .pill-selected-text {
+    font-size: var(--text-h3);
+    line-height: var(--leading-btn-lg);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-role-selected-text);
+  }
+
+  /* "View Details" CTA on the career-path visualization view (Figma: Inter
+     Bold 12px/100%; 12px radius; 12.5px/35.5px padding). Properties forced
+     `!important` to win over the shared Button component's own
+     `font-semibold`/`text-body-lg`/`rounded-lg`/`py-2` defaults at equal
+     specificity within the same Tailwind `utilities` cascade layer.
+     Deliberately does NOT set `color`: this class lives in the earlier-
+     declared `components` layer, and `!important` reverses cascade-layer
+     priority (earlier layer wins), so a hardcoded color here would always
+     beat web's tenant-branding contrast guard
+     (`apps/frontend/web/src/index.css`, `@layer utilities`) that derives the
+     correct `--color-primary-button-foreground` for whatever colour
+     `BrandingThemeStyle` put on this tenant's primary button — painting the
+     wrong (illegible) text colour for any tenant whose brand colour isn't
+     the default yellow. Leave text colour to that guard + the Button
+     component's own default. */
+  .btn-view-details-text {
+    font-size: var(--text-body-sm) !important;
+    line-height: var(--leading-full) !important;
+    font-weight: var(--font-weight-bold) !important;
+    border-radius: var(--radius-xl) !important;
+    padding-top: var(--spacing-btn-cta-y) !important;
+    padding-bottom: var(--spacing-btn-cta-y) !important;
+    padding-left: var(--spacing-btn-cta-x) !important;
+    padding-right: var(--spacing-btn-cta-x) !important;
+  }
+
+  .text-heading-nudge {
+    font-size: var(--text-heading);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--leading-nudge);
+  }
+
+  .text-interview-card-md {
+    font-size: var(--text-h4);
+    line-height: var(--leading-nudge);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .text-3sx-regular {
+    font-size: var(--text-3xs);
+    font-weight: var(--font-weight-regular);
+  }
+
+  .text-3sx-medium {
+    font-size: var(--text-3xs);
+    line-height: var(--leading-body-sm);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .percentage-md {
+    font-size: var(--text-percentage-md);
+    line-height: var(--leading-nudge);
+    letter-spacing: -0.9px;
+    font-weight: var(--font-weight-extrabold);
+  }
+
+  .percentage-heading {
+    font-size: var(--text-body);
+    line-height: var(--leading-full);
+    letter-spacing: -0.9px;
+    font-weight: var(--font-weight-regular);
+  }
+}
+
+.text-count {
+  font-size: var(--text-btn);
+  line-height: var(--leading-label);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0;
+}
+
+.text-count-label {
+  font-size: var(--text-body);
+  line-height: var(--leading-btn-lg);
+  letter-spacing: 0;
+}
+
+.text-count-label-sm {
+  font-size: var(--text-label);
+  line-height: var(--leading-btn-lg);
+  letter-spacing: 0;
+}
+
+.text-caption {
+  font-size: var(--text-h4);
+  line-height: var(--leading-h3);
+}
+
+.text-match-level-md {
+  font-size: var(--text-h4);
+  line-height: var(--leading-full);
+  font-weight: var(--font-weight-heavy);
+}
+
+.text-match-level-sm {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--text-meta);
+  line-height: var(--leading-full);
+}
+
+.text-match-level-sm-semibold {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-meta);
+  line-height: var(--leading-full);
+}
+
+.text-body-regular {
+  font-size: var(--text-body);
+  line-height: var(--leading-label);
+  font-weight: var(--font-weight-regular);
+}
+
+.body-label-medium {
+  font-size: var(--text-body);
+  line-height: var(--leading-label);
+  font-weight: var(--font-weight-medium);
+}
+
+.body-label-semibold {
+  font-size: var(--text-body);
+  line-height: var(--leading-label);
+  font-weight: var(--font-weight-semibold);
+}
+
+.text-card-title {
+  font-size: var(--text-h4);
+  line-height: var(--leading-body-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.text-card-lg {
+  font-size: var(--text-card-xl);
+  font-weight: var(--font-weight-heavy);
+  line-height: var(--leading-full);
+}
+
+.label-default {
+  font-size: var(--text-label-md);
+  line-height: var(--leading-label-md);
+  letter-spacing: 0;
+}
+
+.text-h5 {
+  font-size: var(--text-h5);
+  line-height: var(--leading-h5);
+  font-weight: var(--font-weight-semibold);
+}
+
+.menu-default {
+  font-size: var(--text-menu);
+  line-height: var(--leading-menu);
+  font-weight: var(--font-weight-medium);
+}
+
+.text-title {
+  font-size: var(--text-h3);
+  line-height: var(--leading-h3-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.text-content {
+  font-size: var(--text-body);
+  line-height: var(--leading-btn-lg);
+  font-weight: var(--font-weight-regular);
+}
+
+.text-content-sm {
+  font-size: var(--text-body);
+  line-height: var(--leading-btn-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.search-btn {
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-full);
+  font-weight: var(--font-weight-bold);
+}
+
+/* ── Utilities ───────────────────────────────────────────────── */
+@layer utilities {
+  /* Text Colors */
+  .text-primary {
+    color: var(--color-primary);
+  }
+
+  .text-primary-dark {
+    color: var(--color-text-dark);
+  }
+
+  .text-default {
+    color: var(--color-text);
+  }
+
+  .text-profile-heading {
+    color: var(--color-profile-heading-text);
+  }
+
+  /* Master Profile card section titles ("Contact Details", "Company
+     Information", ...). Reuses the 15px group-label size token at bold
+     weight with the design's tight tracking. */
+  .text-profile-card-title {
+    font-size: var(--text-group-label);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.2px;
+  }
+
+  .text-profile-subtitle {
+    font-size: var(--text-email);
+    color: var(--color-profile-subtitle-text);
+  }
+
+  .border-profile-edit-btn {
+    border-color: var(--color-profile-edit-btn-border);
+  }
+
+  .text-profile-edit-btn {
+    color: var(--color-profile-edit-btn-text);
+  }
+
+  .border-profile-card-divider {
+    border-color: var(--color-profile-card-divider);
+  }
+
+  .text-profile-card-description {
+    color: var(--color-profile-card-description);
+  }
+
+  .border-profile-card {
+    border-color: var(--color-profile-card-border);
+  }
+
+  .text-profile-field-value {
+    color: var(--color-profile-field-value-text);
+  }
+
+  .text-body-white {
+    color: var(--color-text-body-white);
+  }
+
+  .text-body-text {
+    color: var(--color-body-text);
+  }
+
+  .text-secondary {
+    color: var(--color-secondary-text);
+  }
+
+  .text-form-label {
+    color: var(--color-form-label);
+  }
+
+  .text-field-label-muted {
+    color: var(--color-field-label-muted);
+  }
+
+  .text-profile-link {
+    color: var(--color-profile-link-text);
+  }
+
+  .text-input-field {
+    color: var(--color-input-text);
+  }
+
+  .text-static-secondary {
+    color: var(--color-static-secondary);
+  }
+
+  .text-static-text {
+    color: var(--color-static-text);
+  }
+
+  .text-error {
+    color: var(--color-error);
+  }
+
+  .text-inactive {
+    color: var(--color-inactive-text);
+  }
+
+  .text-inactive-text {
+    color: var(--color-inactive-text);
+  }
+
+  .text-body-secondary {
+    color: var(--body-secondary-text);
+  }
+
+  .text-icons-neutral-default {
+    color: var(--color-inactive-text);
+  }
+
+  .text-primary-500 {
+    color: var(--color-primary-500);
+  }
+
+  .text-warning-dark {
+    color: var(--color-text-warning-dark);
+  }
+
+  .text-info-dark {
+    color: var(--color-info-dark);
+  }
+
+  .text-on-dark {
+    color: var(--color-on-dark);
+  }
+
+  .text-secondary-800 {
+    color: var(--color-secondary-800);
+  }
+
+  .text-stat-label {
+    color: var(--color-stat-label);
+  }
+
+  .text-stat-value {
+    color: var(--color-stat-value);
+  }
+
+  .body-text {
+    color: var(--color-action-text);
+  }
+
+  .text-secondary-text {
+    color: var(--color-secondary-text);
+  }
+
+  .text-on-dark-bg {
+    color: var(--color-on-dark-bg);
+  }
+
+  .text-body-black {
+    color: var(--color-text-body-black);
+  }
+
+  .placeholder-body-secondary::placeholder {
+    color: var(--body-secondary-text);
+    font-weight: 400;
+    font-size: var(--text-body-sm);
+  }
+
+  .text-color-on-primary {
+    color: var(--color-on-text-primary);
+  }
+
+  /* Background Colors */
+  .bg-primary {
+    background-color: var(--color-primary-button);
+  }
+
+  .bg-primary\/90 {
+    background-color: color-mix(
+      in srgb,
+      var(--color-primary-button) 90%,
+      transparent
+    );
+  }
+
+  .bg-primary-dark {
+    background-color: var(--color-primary-dark);
+  }
+
+  .bg-input {
+    background-color: var(--color-bg-light);
+  }
+
+  /* Shared "AI" brand gradient — used on pills/cards that call out
+     AI-generated content (e.g. the interview report's feedback blocks).
+     Single source of truth so the brand gradient changes in one place. */
+  .bg-ai-gradient {
+    background-image: linear-gradient(
+      270deg,
+      #6c4aff 0%,
+      #ce51ff 31.25%,
+      #fa2380 64.42%,
+      #ff8b38 100%
+    );
+  }
+
+  .bg-page {
+    background-color: var(--color-bg);
+  }
+
+  .bg-card {
+    background-color: var(--color-card-bg);
+  }
+
+  .bg-tertiary {
+    background-color: var(--color-tertiary);
+  }
+
+  .bg-neutral-light {
+    background-color: var(--color-surface-muted);
+  }
+
+  /* Light-mode-only chip styling for entry card icons; dark mode keeps the
+     bg-neutral-light surface (--color-surface-muted) with no border. */
+  [data-theme="light"] .entry-card-icon {
+    background-color: var(--color-field-input);
+    border: 1px solid var(--color-surface-action-hover);
+  }
+
+  .bg-gray-100 {
+    background-color: var(--color-gray-100);
+  }
+
+  .bg-warning-light {
+    background-color: var(--color-border-warning-light);
+  }
+
+  .bg-card-yellow-soft {
+    background-color: var(--color-card-yellow-soft);
+  }
+
+  .bg-card-purple-soft {
+    background-color: var(--color-card-purple-soft);
+  }
+
+  .bg-pill-active {
+    background-color: var(--color-pill-active-bg);
+  }
+
+  .text-pill-active {
+    color: var(--color-pill-active-text);
+  }
+
+  .bg-card-green-soft {
+    background-color: var(--color-card-green-soft);
+  }
+
+  .bg-secondary-100 {
+    background-color: var(--color-secondary-100);
+  }
+
+  .bg-info-light {
+    background-color: var(--color-info-light);
+  }
+
+  .bg-hover {
+    background-color: var(--color-hover-bg);
+  }
+
+  .text-heading-dark {
+    color: var(--color-text-dark);
+  }
+
+  .bg-surface-neutral-dark {
+    background-color: var(--color-text-dark);
+  }
+
+  .bg-surface-teritiary-dark {
+    background-color: var(--color-tertiary-dark);
+  }
+
+  .text-surface-neutral-dark {
+    color: var(--color-text-dark);
+  }
+
+  .bg-surface-neutral-light {
+    background-color: var(--color-surface-neutral-light);
+  }
+
+  .bg-on-dark {
+    background-color: var(--color-on-dark-bg);
+  }
+
+  /* Employer Master Profile hero card's gradient strip. */
+  .bg-profile-header-gradient {
+    background-image: linear-gradient(
+      to right,
+      var(--color-profile-header-gradient-from),
+      var(--color-profile-header-gradient-via),
+      var(--color-profile-header-gradient-to)
+    );
+  }
+
+  /* Employer Master Profile hero card's avatar gradient. */
+  .bg-profile-avatar-gradient {
+    background-image: linear-gradient(
+      135deg,
+      var(--color-profile-avatar-gradient-from) 0%,
+      var(--color-profile-avatar-gradient-to) 71.429%
+    );
+  }
+
+  /* "Verified" soft-outline pill (header + Authenticity Verification card) —
+     distinct from the solid-fill Badge `success` variant. */
+  .bg-verified-badge {
+    background-color: var(--color-verified-badge-bg);
+  }
+
+  .border-verified-badge {
+    border-color: var(--color-verified-badge-border);
+  }
+
+  .text-verified-badge {
+    color: var(--color-verified-badge-text);
+  }
+
+  .bg-layout {
+    background-color: var(--color-field-input);
+  }
+
+  .bg-text {
+    background-color: var(--color-text);
+  }
+
+  /* Skill proficiency — per-level chip + standalone dot utilities. The
+     `skill-chip-*` class sets the chip's tinted background + colored
+     border; `skill-dot-*` colors a standalone dot (used both inside chips
+     and in proficiency-picker menus). */
+  .skill-chip-beginner {
+    background-color: var(--color-skill-beginner-bg);
+    border-color: var(--color-skill-beginner-bd);
+  }
+
+  .skill-chip-intermediate {
+    background-color: var(--color-skill-intermediate-bg);
+    border-color: var(--color-skill-intermediate-bd);
+  }
+
+  .skill-chip-advanced {
+    background-color: var(--color-skill-advanced-bg);
+    border-color: var(--color-skill-advanced-bd);
+  }
+
+  .skill-chip-expert {
+    background-color: var(--color-skill-expert-bg);
+    border-color: var(--color-skill-expert-bd);
+  }
+
+  .skill-dot-beginner {
+    background-color: var(--color-skill-beginner-dot);
+  }
+
+  .skill-dot-intermediate {
+    background-color: var(--color-skill-intermediate-dot);
+  }
+
+  .skill-dot-advanced {
+    background-color: var(--color-skill-advanced-dot);
+  }
+
+  .skill-dot-expert {
+    background-color: var(--color-skill-expert-dot);
+  }
+
+  /* Dot on a missing/add skill chip — mirrors the filled proficiency dot on
+     an owned chip, just neutral since there's no level yet. */
+  .skill-dot-empty {
+    background-color: var(--color-skill-empty-dot);
+  }
+
+  /* Skill suggestion card — pink → violet gradient surface with magenta
+     accent. Used by the "You might want to add these skills" panel. */
+  .bg-suggestion-card {
+    background-image: linear-gradient(
+      to bottom right,
+      var(--color-suggestion-bg-start),
+      var(--color-suggestion-bg-mid),
+      var(--color-suggestion-bg-end)
+    );
+  }
+
+  .border-suggestion-card {
+    border-color: var(--color-suggestion-border);
+  }
+
+  .text-suggestion-accent {
+    color: var(--color-suggestion-accent);
+  }
+
+  /* Border Colors */
+  .border-default {
+    border-color: var(--color-border);
+  }
+
+  .action-card-border {
+    border-color: var(--color-surface-action-hover);
+  }
+
+  .border-primary {
+    border-color: var(--color-primary);
+  }
+
+  .border-error {
+    border-color: var(--color-error);
+  }
+
+  .border-surface-teritiary-dark {
+    border-color: var(--color-tertiary-dark);
+  }
+
+  .border-warning-light {
+    border-color: var(--color-border-warning-light);
+  }
+
+  .border-secondary-100 {
+    border-color: var(--color-secondary-100);
+  }
+
+  .border-info-light {
+    border-color: var(--color-info-light);
+  }
+
+  .border-neutral-light {
+    border-color: var(--color-surface-muted);
+  }
+
+  .border-color-secondary-light {
+    border-color: var(--color-secondary-light);
+  }
+
+  .border-neutral-dark {
+    border-color: var(--color-neutral-black);
+  }
+
+  .color-border-default {
+    border-color: var(--color-border);
+  }
+
+  /* gradient */
+  .bg-linear {
+    background: linear-gradient(
+      270deg,
+      #6c4aff 0%,
+      #ce51ff 31.25%,
+      #fa2380 64.42%,
+      #ff8b38 100%
+    );
+  }
+
+  .bg-button-linear {
+    background: linear-gradient(
+      270deg,
+      #441aff 0%,
+      #c531ff 31.25%,
+      #fa2380 64.42%,
+      #ff8b38 100%
+    );
+  }
+
+  .bg-text-linear {
+    background: linear-gradient(
+      0deg,
+      #441aff 0%,
+      #c531ff 78.17%,
+      #fa2380 161.15%,
+      #ff8b38 250.14%
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    background-clip: text;
+    color: transparent;
+
+    display: inline-block;
+  }
+
+  .bg-gold-shine {
+    background: var(--background-image-gold-shine);
+  }
+
+  .background-image-corner-glow {
+    background: var(--background-image-corner-glow);
+  }
+
+  .bg-linear-secondary {
+    background: linear-gradient(
+      135deg,
+      var(--color-solar-amber) 0%,
+      var(--color-primary-dark) 100%
+    );
+  }
+
+  .bg-linear-stepper {
+    background: linear-gradient(
+      135deg,
+      var(--color-amber-tint) 0%,
+      var(--color-amber-sun) 100%
+    );
+  }
+
+  /* focus */
+
+  .input-focus-primary:focus-within {
+    border: 1px solid var(--color-text);
+  }
+
+  /* shadow */
+  .primary-shadow {
+    box-shadow: 0px 2px 4px -1px #0000000f;
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+.radix-themes {
+  background: transparent !important;
+  color: inherit !important;
+  font-family: var(--font-sans) !important;
+  --color-surface: #f4f4f4;
+}
+
+.radix-themes:where([data-panel-background="translucent"]) {
+  --color-panel: none !important;
+}
+
+@utility bg-color-gray {
+  background-color: var(--color-gray-100);
+}
+
+@utility text-body-medium {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  font-weight: var(--font-weight-medium);
+}
+
+@utility text-h1-bold {
+  font-size: var(--text-h1);
+  line-height: var(--leading-h1);
+  font-weight: var(--font-weight-bold);
+}
+
+@utility shadow-play-glow {
+  box-shadow: 0px 4px 12px 0px #ffc62666;
+}
+
+@utility bg-frosted-panel {
+  background-image: var(--background-image-frosted-panel);
+}
+
+@utility bg-frosted-panel-dark {
+  background-image: var(--background-image-frosted-panel-dark);
+}
+
+@utility border-divider {
+  border: 1px solid #ffffff1a;
+}
+
+.rich-text-editor .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--color-inactive-text);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.rich-text-editor .ProseMirror {
+  color: var(--color-text);
+}
+
+.rich-text-editor {
+  min-width: 0;
+}
+
+.rich-text-editor .ProseMirror,
+.rich-text-content {
+  overflow-wrap: anywhere;
+}
+
+/* Tailwind Preflight strips heading + list defaults globally. Re-establish
+   the visual hierarchy under a shared scope so the editor's `.ProseMirror`
+   surface and any consumer that renders the editor's HTML output (e.g. the
+   announcement preview modal) stay visually consistent. Apply by adding
+   `rich-text-content` to the wrapping element. */
+.rich-text-content h1 {
+  font-size: var(--text-h1);
+  line-height: var(--leading-h1);
+  font-weight: var(--font-weight-bold);
+  margin-block: 0.5em;
+}
+
+.rich-text-content h2 {
+  font-size: var(--text-h2);
+  line-height: var(--leading-h2);
+  font-weight: var(--font-weight-bold);
+  margin-block: 0.5em;
+}
+
+.rich-text-content h3 {
+  font-size: var(--text-h3);
+  line-height: var(--leading-h3);
+  font-weight: var(--font-weight-bold);
+  margin-block: 0.5em;
+}
+
+.rich-text-content ul,
+.rich-text-content ol {
+  padding-inline-start: 1.5em;
+  margin-block: 0.25em;
+}
+
+.rich-text-content ul {
+  list-style: disc;
+}
+
+.rich-text-content ol {
+  list-style: decimal;
+}
+
+.rich-text-content a {
+  color: var(--color-secondary-blue);
+  text-decoration: underline;
+}
+
+.hub-tabs-item-first {
+  border-width: 1px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.hub-tabs-item-middle {
+  border-width: 1px;
+  border-radius: 4px;
+}
+
+.hub-tabs-item-last {
+  border-width: 1px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Scrollbar hidden until the container is hovered. The gutter is always
+   reserved (thumb just goes transparent) so revealing it doesn't shift
+   content. */
+.scrollbar-hover {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.scrollbar-hover:hover {
+  scrollbar-color: var(--color-border) transparent;
+}
+
+.scrollbar-hover::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scrollbar-hover::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 9999px;
+}
+
+.scrollbar-hover:hover::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+}
+
+/* Slim, rounded, always-visible scrollbar in the style of most modern sites
+   (GitHub/Notion-like): a light track and a gray pill thumb with a few
+   pixels of transparent padding so it "floats" off the track edges instead
+   of touching it. */
+.scrollbar-styled {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-neutral-light) transparent;
+}
+
+.scrollbar-styled::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.scrollbar-styled::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-styled::-webkit-scrollbar-thumb {
+  background-color: var(--color-border-neutral-light);
+  border-radius: 9999px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+.scrollbar-styled::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-border);
+}
+
+.rt-TableRoot.employer-table {
+  --table-row-box-shadow: inset 0 -1px var(--color-border-neutral-light);
+  border-color: var(--color-border-neutral-light);
+}
+
+.rt-TableRoot.employer-table .rt-TableBody .rt-TableRow:last-child {
+  --table-row-box-shadow: inset 0 -1px var(--color-border-neutral-light);
+}
+
+.rt-TableRoot.employer-table :where(.rt-TableCell) {
+  font-size: var(--text-body-sm);
+}
+
+/* Create Job form — white field surfaces per design. Flips the default gray
+   field fill (`bg-field-input` on inputs + the logo upload, `bg-bg-light` on
+   the currency select) to white, scoped to the form so other surfaces keep
+   their grey inputs. */
+.create-job-form .bg-field-input,
+.create-job-form .bg-bg-light {
+  background-color: var(--color-card-bg);
+}
+
+/* Create Job form — B2B2C-94 redlines. 12px body text throughout the form;
+   gray-800 (#1F2937) field labels; gray-500 (#6B7280) input placeholders.
+   Scoped to .create-job-form so the shared Input/SelectField keep their
+   defaults on every other surface. */
+.create-job-form label,
+.create-job-form span,
+.create-job-form input,
+.create-job-form textarea {
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-body-sm);
+}
+
+/* Every field rendered with a real <label> (Input + the Job Description
+   label) → gray-800. Span-based labels (SelectField/TagInput/manual) are
+   recoloured at their call sites with `text-form-label`. */
+.create-job-form label {
+  color: var(--color-form-label);
+}
+
+.create-job-form input::placeholder,
+.create-job-form textarea::placeholder {
+  color: var(--color-input-text);
+}
+
+/* Field boxes stand 44px tall. The skills/chip box (flex-wrap) keeps a
+   min-height instead so it can still grow as tags wrap onto new lines. */
+.create-job-form .bg-field-input:not(.flex-wrap),
+.create-job-form .bg-input {
+  height: 44px;
+}
+
+.create-job-form .flex-wrap.bg-field-input {
+  min-height: 44px;
+}
+
+/* Job Description (rich-text) placeholder → 12px, matching the other fields.
+   The placeholder is a ::before on the empty editor paragraph, so the input/
+   textarea rules above don't reach it. */
+.create-job-form
+  .rich-text-editor
+  .ProseMirror
+  p.is-editor-empty:first-child::before {
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-body-sm);
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}

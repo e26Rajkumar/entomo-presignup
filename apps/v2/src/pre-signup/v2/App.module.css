@@ -1,0 +1,121 @@
+.app {
+  min-height: 100vh;
+  background-color: #f7f7f5;
+  color: #1a1a1a;
+}
+
+.app ::selection {
+  background-color: #d8c7b8;
+  color: #1a1a1a;
+}
+
+.main {
+  padding-top: 5rem;
+}
+
+.opportunityGateway {
+  padding: 4rem 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .opportunityGateway {
+    padding: 6rem 0;
+  }
+}
+
+.gatewayHeader {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  .gatewayHeader {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.gatewayTitle {
+  font-size: 3rem;
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  color: var(--color-heading);
+  transition: all 0.5s;
+  cursor: default;
+  margin-bottom: 1.5rem;
+  line-height: 1;
+}
+
+@media (min-width: 768px) {
+  .gatewayTitle {
+    font-size: 4.5rem;
+  }
+}
+
+.gatewayTitle:hover {
+  background: linear-gradient(
+    to var(--inline-end),
+    var(--color-heading),
+    color-mix(in srgb, var(--color-heading), white 45%)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.gatewayTitleAccent {
+  font-weight: 500;
+}
+
+.gatewayUnderline {
+  height: 0.25rem;
+  width: 0;
+  background: linear-gradient(to var(--inline-end), var(--color-heading), transparent);
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 9999px;
+  transition: width 0.7s;
+  margin-bottom: 2rem;
+}
+
+.gatewayHeader:hover .gatewayUnderline {
+  width: 8rem;
+}
+
+.gatewaySubtext {
+  font-size: 1.25rem;
+  color: rgb(107, 114, 128);
+  font-weight: 300;
+  max-width: 48rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2.5rem;
+  line-height: 1.625;
+}
+
+.gatewayButton {
+  padding: 1rem 2.5rem;
+  background-color: var(--color-cta);
+  color: white;
+  border-radius: 9999px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px
+    rgba(0, 0, 0, 0.1);
+  transform: translateY(0);
+}
+
+.gatewayButton:hover {
+  background-color: color-mix(in srgb, var(--color-cta), black 10%);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transform: translateY(-0.25rem);
+}

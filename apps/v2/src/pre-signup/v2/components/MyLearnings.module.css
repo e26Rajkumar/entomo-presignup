@@ -1,0 +1,715 @@
+.section {
+  display: block;
+  padding: 4rem 1.5rem;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+
+@media (min-width: 1200px) {
+  .section {
+    padding: 6rem 3rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 4rem 3rem;
+  }
+}
+
+.bgBlur {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50rem;
+  height: 50rem;
+  background-color: rgba(216, 199, 184, 0.1);
+  border-radius: 9999px;
+  filter: blur(64px);
+  z-index: -10;
+  pointer-events: none;
+}
+
+.headerGroup {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  display: inline-block;
+  width: 100%;
+}
+
+@media (min-width: 1200px) {
+  .headerGroup {
+    margin-bottom: 4rem;
+  }
+}
+
+.heading {
+  font-size: 2.25rem;
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  color: var(--color-heading);
+  transition: all 0.3s;
+  cursor: default;
+  display: inline-block;
+}
+
+@media (min-width: 768px) {
+  .heading {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .heading {
+    font-size: 4.5rem;
+  }
+}
+
+.heading:hover {
+  background: linear-gradient(
+    to right,
+    var(--color-heading),
+    color-mix(in srgb, var(--color-heading), white 45%)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.headingAccent {
+  font-weight: 500;
+}
+
+.underline {
+  height: 0.25rem;
+  width: 0;
+  background: linear-gradient(to right, var(--color-heading), transparent);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1rem;
+  border-radius: 9999px;
+  transition: width 0.7s;
+}
+
+.headerGroup:hover .underline {
+  width: 6rem;
+}
+
+/* ── Fan layout (1200px+) ── */
+.fanWrapper {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .fanWrapper {
+    display: block;
+  }
+}
+
+.fanInner {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 37.5rem;
+  width: 100%;
+  max-width: 75rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Shared card base */
+.fanCard {
+  position: absolute;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px
+    rgba(0, 0, 0, 0.1);
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.fanCard:hover {
+  z-index: 50 !important;
+  border: 2px solid white;
+}
+
+.fanCard1 {
+  z-index: 10;
+  transform: translateX(-28.125rem) rotate(-15deg);
+  width: 16rem;
+  height: 20rem;
+}
+
+.fanCard1:hover {
+  transform: translateX(-28.125rem) translateY(-2rem) scale(1.1) rotate(0deg);
+}
+
+.fanCard2 {
+  z-index: 20;
+  transform: translateX(-15rem) rotate(-8deg);
+  width: 18rem;
+  height: 24rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px
+    rgba(0, 0, 0, 0.1);
+}
+
+.fanCard2:hover {
+  transform: translateX(-15rem) translateY(-2rem) scale(1.1) rotate(0deg);
+}
+
+.fanCard3 {
+  z-index: 40;
+  width: 20rem;
+  height: 28.125rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(26, 26, 26, 0.1);
+}
+
+.fanCard3:hover {
+  transform: translateY(-1rem) scale(1.05);
+}
+
+.fanCard4 {
+  z-index: 30;
+  transform: translateX(15rem) rotate(8deg);
+  width: 18rem;
+  height: 24rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px
+    rgba(0, 0, 0, 0.1);
+}
+
+.fanCard4:hover {
+  transform: translateX(15rem) translateY(-2rem) scale(1.1) rotate(0deg);
+}
+
+.fanCard5 {
+  z-index: 10;
+  transform: translateX(28.125rem) rotate(15deg);
+  width: 16rem;
+  height: 20rem;
+}
+
+.fanCard5:hover {
+  transform: translateX(28.125rem) translateY(-2rem) scale(1.1) rotate(0deg);
+}
+
+.cardImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s;
+}
+
+.fanCard:hover .cardImg {
+  transform: scale(1.1);
+}
+
+.fanCard3:hover .cardImg {
+  transform: scale(1.05);
+}
+
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.1) 50%,
+    transparent 100%
+  );
+  transition: all 0.5s;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.fanCard:hover .cardOverlay {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.7) 50%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+}
+
+.cardOverlayCenter {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: linear-gradient(
+    to top,
+    #b23a22 0%,
+    transparent 50%,
+    transparent 100%
+  );
+  transition: all 0.5s;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.fanCard3:hover .cardOverlayCenter {
+  background: linear-gradient(
+    to top,
+    #000 0%,
+    rgba(178, 58, 34, 0.8) 50%,
+    transparent 100%
+  );
+}
+
+.cardContent {
+  transform: translateY(1rem);
+  transition: transform 0.5s;
+}
+
+.fanCard:hover .cardContent {
+  transform: translateY(0);
+}
+
+.cardContentCenter {
+  transform: translateY(1rem);
+  transition: transform 0.5s;
+  text-align: center;
+}
+
+.fanCard3:hover .cardContentCenter {
+  transform: translateY(0);
+}
+
+.cardLabel {
+  color: white;
+  font-weight: 500;
+  font-size: 0.875rem;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+
+.cardLabelLg {
+  color: white;
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+
+.cardTitleCenter {
+  color: white;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.cardTrendingTag {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.cardExpand {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: all 0.5s;
+  margin-top: 0.75rem;
+}
+
+.fanCard:hover .cardExpand {
+  max-height: 10rem;
+  opacity: 1;
+}
+
+.cardExpandCenter {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: all 0.5s;
+  margin-top: 0.75rem;
+}
+
+.fanCard3:hover .cardExpandCenter {
+  max-height: 10rem;
+  opacity: 1;
+}
+
+.cardExpandText {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+  line-height: 1.625;
+  margin-bottom: 1rem;
+}
+
+.cardExpandTextSm {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+  line-height: 1.625;
+  margin-bottom: 1.25rem;
+}
+
+.exploreBtn {
+  width: 100%;
+  padding: 0.625rem 0;
+  background-color: var(--color-cta);
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  transition: all 0.3s;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px
+    rgba(0, 0, 0, 0.1);
+  transform: translateY(0);
+}
+
+.exploreBtn:hover {
+  background-color: color-mix(in srgb, var(--color-cta), black 10%);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px
+    rgba(0, 0, 0, 0.1);
+  transform: translateY(-0.25rem);
+}
+
+.exploreBtnRed {
+  width: 100%;
+  padding: 0.75rem 0;
+  background-color: var(--color-cta);
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  transition: all 0.3s;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px
+    rgba(0, 0, 0, 0.1);
+  transform: translateY(0);
+}
+
+.exploreBtnRed:hover {
+  background-color: color-mix(in srgb, var(--color-cta), black 10%);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px
+    rgba(0, 0, 0, 0.1);
+  transform: translateY(-0.25rem);
+}
+
+.univBadge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 20;
+  color: #1a1a1a;
+  font-weight: 700;
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.375rem 0.75rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 0.375rem;
+  border: 1px solid rgba(229, 231, 235, 0.5);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px
+    rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ── Grid layout (below 1200px) ── */
+.gridWrapper {
+  display: block;
+}
+
+@media (min-width: 1200px) {
+  .gridWrapper {
+    display: none;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: 240px 240px;
+    gap: 1.25rem;
+  }
+}
+
+.gridCard {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px
+    rgba(0, 0, 0, 0.1);
+  transition: all 0.5s;
+  cursor: pointer;
+  height: 11rem;
+}
+
+@media (min-width: 640px) {
+  .gridCard {
+    height: 13rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .gridCard {
+    height: 100%;
+  }
+}
+
+.gridCard:hover {
+  transform: scale(1.02) translateY(-0.25rem);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px
+    rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.gridCardFeatured {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transition: all 0.5s;
+  cursor: pointer;
+  border: 1px solid rgba(26, 26, 26, 0.1);
+  grid-column: span 2;
+  order: -1;
+  height: 14rem;
+}
+
+@media (min-width: 640px) {
+  .gridCardFeatured {
+    height: 16rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .gridCardFeatured {
+    grid-column: span 1;
+    grid-row: span 2;
+    order: 0;
+    height: 100%;
+  }
+}
+
+.gridCardFeatured:hover {
+  transform: scale(1.01) translateY(-0.25rem);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.gridCardImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  transition: transform 0.7s;
+}
+
+.gridCard:hover .gridCardImg,
+.gridCardFeatured:hover .gridCardImg {
+  transform: scale(1.1);
+}
+
+.gridCardFeatured:hover .gridCardImg {
+  transform: scale(1.05);
+}
+
+.gridOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.1) 50%,
+    transparent 100%
+  );
+  transition: all 0.5s;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.gridCard:hover .gridOverlay {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.7) 50%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+}
+
+.gridOverlayCenter {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: linear-gradient(
+    to top,
+    #b23a22 0%,
+    transparent 50%,
+    transparent 100%
+  );
+  transition: all 0.5s;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.gridCardFeatured:hover .gridOverlayCenter {
+  background: linear-gradient(
+    to top,
+    #000 0%,
+    rgba(178, 58, 34, 0.8) 50%,
+    transparent 100%
+  );
+}
+
+.gridContent {
+  transform: translateY(0.75rem);
+  transition: transform 0.5s;
+}
+
+.gridCard:hover .gridContent,
+.gridCardFeatured:hover .gridContent {
+  transform: translateY(0);
+}
+
+.gridContentCenter {
+  transform: translateY(0.75rem);
+  transition: transform 0.5s;
+  text-align: center;
+}
+
+.gridCardFeatured:hover .gridContentCenter {
+  transform: translateY(0);
+}
+
+.gridLabel {
+  color: white;
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 640px) {
+  .gridLabel {
+    font-size: 0.875rem;
+  }
+}
+
+.gridTitleCenter {
+  color: white;
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+}
+
+@media (min-width: 640px) {
+  .gridTitleCenter {
+    font-size: 1.5rem;
+  }
+}
+
+.gridTrendingTag {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.gridExpand {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: all 0.5s;
+  margin-top: 0.5rem;
+}
+
+.gridCard:hover .gridExpand {
+  max-height: 10rem;
+  opacity: 1;
+}
+
+.gridExpandCenter {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: all 0.5s;
+  margin-top: 0.5rem;
+}
+
+.gridCardFeatured:hover .gridExpandCenter {
+  max-height: 10rem;
+  opacity: 1;
+}
+
+.gridExpandText {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.75rem;
+  line-height: 1.625;
+  margin-bottom: 0.75rem;
+}
+
+.gridExpandBtn {
+  width: 100%;
+  padding: 0.5rem 0;
+  background-color: var(--color-cta);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  transition: all 0.3s;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px
+    rgba(0, 0, 0, 0.1);
+}
+
+.gridExpandBtnRed {
+  width: 100%;
+  padding: 0.625rem 0;
+  background-color: var(--color-cta);
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  transition: all 0.3s;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px
+    rgba(0, 0, 0, 0.1);
+}
+
+.univBadgeSm {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 20;
+  color: #1a1a1a;
+  font-weight: 700;
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.625rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 0.375rem;
+  border: 1px solid rgba(229, 231, 235, 0.5);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px
+    rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
