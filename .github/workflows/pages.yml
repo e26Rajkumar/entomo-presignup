@@ -1,5 +1,6 @@
 # Builds pre-signup v1, v2 and v3 and publishes them to GitHub Pages as one
-# site: <pages-url>/v1/, /v2/, /v3/, with a small landing page at the root.
+# site: <pages-url>/v1/, /v2/, /v3/, with a home page at the root
+# (.github/pages/) where visitors pick a version to open in a new tab.
 #
 # One-time setup in the GitHub repository:
 #   1. Settings → Pages → Build and deployment → Source: "GitHub Actions".
@@ -56,7 +57,8 @@ jobs:
             bun run --cwd "apps/$app" build --base="$BASE_PATH/$app/"
             cp -r "apps/$app/dist" "site/$app"
           done
-          cp .github/pages/index.html site/index.html
+          # Home page that links to the three versions, with its previews.
+          cp -r .github/pages/. site/
 
       - uses: actions/upload-pages-artifact@v3
         with:

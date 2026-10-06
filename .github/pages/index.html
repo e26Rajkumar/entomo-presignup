@@ -3,88 +3,325 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ministry of Labour Digital Workforce Hub | Pre-signup</title>
-    <!-- Root of the GitHub Pages site (copied in by .github/workflows/pages.yml).
-         Links are relative so they work under /<repo>/ and on a custom domain. -->
-    <link rel="icon" href="v1/favicon.ico" sizes="32x32" />
-    <link rel="icon" href="v1/favicon.svg" type="image/svg+xml" />
+    <title>Ministry of Labour Digital Workforce Hub | Pre-signup designs</title>
+    <meta
+      name="description"
+      content="Three design versions of the Digital Workforce Hub pre-signup page."
+    />
+    <!-- Root of the GitHub Pages site: .github/workflows/pages.yml copies this
+         folder next to the v1/, v2/ and v3/ builds. Links are relative so they
+         work under /<repo>/ and on a custom domain. -->
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <style>
       :root {
         --blue: #3464b0;
+        --cta: #f39d52;
         --text: #111111;
-        --muted: #555555;
-        --bg: #f7f7f5;
+        --muted: #5b5f66;
+        --bg: #f6f7f9;
         --card: #ffffff;
-        --border: rgba(0, 0, 0, 0.08);
+        --frame: #e9ecf1;
+        --border: rgba(17, 17, 17, 0.08);
+        --shadow: 0 1px 2px rgba(17, 17, 17, 0.04),
+          0 8px 24px rgba(17, 17, 17, 0.06);
+        --shadow-hover: 0 2px 4px rgba(17, 17, 17, 0.05),
+          0 18px 40px rgba(52, 100, 176, 0.16);
+        color-scheme: light dark;
       }
       @media (prefers-color-scheme: dark) {
         :root {
+          --blue: #7ea2e0;
           --text: #f2f2f2;
-          --muted: #b5b5b5;
+          --muted: #a9adb5;
           --bg: #111111;
-          --card: #1c1c1c;
-          --border: rgba(255, 255, 255, 0.12);
+          --card: #1b1c1f;
+          --frame: #26282c;
+          --border: rgba(255, 255, 255, 0.1);
+          --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+          --shadow-hover: 0 18px 40px rgba(0, 0, 0, 0.45);
         }
       }
+
       * {
         box-sizing: border-box;
       }
       body {
         margin: 0;
-        min-height: 100vh;
-        display: grid;
-        place-items: center;
-        padding: 48px 16px;
         background: var(--bg);
         color: var(--text);
         font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
       }
-      main {
-        width: 100%;
-        max-width: 560px;
+      .page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 16px 48px;
+      }
+
+      header {
+        display: grid;
+        justify-items: center;
+        text-align: center;
+        gap: 12px;
+        margin-bottom: 40px;
+      }
+      .logo {
+        display: block;
+        width: 167px;
+        height: 52px;
+        margin-bottom: 12px;
+      }
+      .eyebrow {
+        margin: 0;
+        color: var(--blue);
+        font-size: 0.8125rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
       h1 {
-        margin: 0 0 8px;
-        font-size: 1.5rem;
+        margin: 0;
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        text-wrap: balance;
       }
-      p {
-        margin: 0 0 24px;
+      .lead {
+        margin: 0;
+        max-width: 34rem;
         color: var(--muted);
+        font-size: 1.0625rem;
+        text-wrap: pretty;
       }
-      ul {
+
+      .versions {
         list-style: none;
         margin: 0;
         padding: 0;
         display: grid;
-        gap: 12px;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
       }
-      a {
-        display: block;
-        padding: 16px 20px;
+      .card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
         border: 1px solid var(--border);
-        border-radius: 14px;
+        border-radius: 18px;
         background: var(--card);
+        box-shadow: var(--shadow);
         color: inherit;
         text-decoration: none;
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease,
+          border-color 0.2s ease;
       }
-      a:hover,
-      a:focus-visible {
+      .card:hover {
+        transform: translateY(-4px);
         border-color: var(--blue);
+        box-shadow: var(--shadow-hover);
       }
-      a strong {
+      .card:focus-visible {
+        outline: 3px solid var(--blue);
+        outline-offset: 3px;
+      }
+
+      /* Preview shown inside a minimal browser window. */
+      .preview {
+        margin: 12px 12px 0;
+        border-radius: 10px;
+        background: var(--frame);
+        overflow: hidden;
+      }
+      .preview-bar {
+        display: flex;
+        gap: 6px;
+        padding: 9px 12px;
+      }
+      .preview-bar span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--muted);
+        opacity: 0.35;
+      }
+      .preview-img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+      }
+      .card:hover .preview-img {
+        transform: scale(1.03);
+      }
+
+      .body {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        gap: 8px;
+        padding: 18px 20px 20px;
+      }
+      .version {
+        margin: 0;
         color: var(--blue);
+        font-size: 0.8125rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      h2 {
+        margin: 0;
+        font-size: 1.25rem;
+        line-height: 1.3;
+      }
+      .desc {
+        margin: 0 0 4px;
+        color: var(--muted);
+        font-size: 0.9375rem;
+      }
+      .open {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        align-self: flex-start;
+        margin-top: auto;
+        padding: 10px 18px;
+        border-radius: 999px;
+        background: var(--cta);
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 0.9375rem;
+      }
+      .open svg {
+        width: 16px;
+        height: 16px;
+        transition: transform 0.2s ease;
+      }
+      .card:hover .open svg {
+        transform: translate(2px, -2px);
+      }
+
+      footer {
+        margin-top: 48px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.875rem;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .card,
+        .preview-img,
+        .open svg {
+          transition: none;
+        }
+        .card:hover,
+        .card:hover .preview-img,
+        .card:hover .open svg {
+          transform: none;
+        }
       }
     </style>
   </head>
   <body>
-    <main>
-      <h1>Digital Workforce Hub: pre-signup pages</h1>
-      <p>Three design versions of the same page.</p>
-      <ul>
-        <li><a href="v1/"><strong>Version 1</strong> — photo carousel hero</a></li>
-        <li><a href="v2/"><strong>Version 2</strong> — light editorial layout</a></li>
-        <li><a href="v3/"><strong>Version 3</strong> — dark, bold layout</a></li>
-      </ul>
-    </main>
+    <div class="page">
+      <header>
+        <picture>
+          <source srcset="logo-light.svg" media="(prefers-color-scheme: dark)" />
+          <img class="logo" src="logo.svg" width="167" height="52" alt="Ministry of Labour" />
+        </picture>
+        <p class="eyebrow">Digital Workforce Hub</p>
+        <h1>Choose a pre-signup design</h1>
+        <p class="lead">
+          Three versions of the same page. Pick one to open it in a new tab.
+        </p>
+      </header>
+
+      <main>
+        <ul class="versions">
+          <li>
+            <a class="card" href="v1/" target="_blank" rel="noopener">
+              <div class="preview">
+                <div class="preview-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+                <img class="preview-img" src="previews/v1.jpg" width="1200" height="750" alt="" />
+              </div>
+              <div class="body">
+                <p class="version">Version 1</p>
+                <h2>Photo carousel</h2>
+                <p class="desc">
+                  Full-screen carousel of Oman landscapes, a scroll-zoom logo and
+                  a bold headline.
+                </p>
+                <span class="open">
+                  Open design
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg>
+                  <span class="sr-only">(opens in a new tab)</span>
+                </span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="card" href="v2/" target="_blank" rel="noopener">
+              <div class="preview">
+                <div class="preview-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+                <img class="preview-img" src="previews/v2.jpg" width="1200" height="750" alt="" />
+              </div>
+              <div class="body">
+                <p class="version">Version 2</p>
+                <h2>Light editorial</h2>
+                <p class="desc">
+                  Bright, airy layout with a full-width photo hero and clean,
+                  understated type.
+                </p>
+                <span class="open">
+                  Open design
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg>
+                  <span class="sr-only">(opens in a new tab)</span>
+                </span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="card" href="v3/" target="_blank" rel="noopener">
+              <div class="preview">
+                <div class="preview-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+                <img class="preview-img" src="previews/v3.jpg" width="1200" height="750" alt="" />
+              </div>
+              <div class="body">
+                <p class="version">Version 3</p>
+                <h2>Dark and bold</h2>
+                <p class="desc">
+                  Dark interface with a framed photo hero, oversized uppercase
+                  type and orange accents.
+                </p>
+                <span class="open">
+                  Open design
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg>
+                  <span class="sr-only">(opens in a new tab)</span>
+                </span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </main>
+
+      <footer>Ministry of Labour · Digital Workforce Hub</footer>
+    </div>
   </body>
 </html>
